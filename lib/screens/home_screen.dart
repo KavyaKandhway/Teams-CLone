@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:teams_clone/utils/universal_variables.dart';
 
+import 'PageView/chat_list.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -36,8 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Center(
             child: Text("Activity Screen"),
           ),
-          Center(
-            child: Text("Chat List Screen"),
+          Container(
+            child: ChatListScreen(),
           ),
           Center(
             child: Text("Meet Screen"),
