@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "39237231841",
+    "project_id": "teams-clone-735bb",
+    "storage_bucket": "teams-clone-735bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:39237231841:android:219f8fa45347e5180783a0",
+        "android_client_info": {
+          "package_name": "com.example.teams_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "39237231841-nlmel326i1d4n1pigujb9a6doqdhaptg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.teams_clone",
+            "certificate_hash": "5f75ab54d427d02abc960be6034974b5d26a43b2"
+          }
+        },
+        {
+          "client_id": "39237231841-u2scasaif4tb8c8bl7tt3t83sinq1tob.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdRHUirnz6mVR_AhDpDtj_QSqTW_1HpCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "39237231841-u2scasaif4tb8c8bl7tt3t83sinq1tob.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
