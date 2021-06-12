@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:teams_clone/constants/strings.dart';
 import 'package:teams_clone/models/message.dart';
 import 'package:teams_clone/models/user.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
+import 'package:teams_clone/utils/utilities.dart';
 import 'package:teams_clone/widgets/app_bart.dart';
 import 'package:teams_clone/widgets/custom_tile.dart';
 
@@ -283,9 +287,14 @@ class _ChatScreenState extends State<ChatScreen> {
               ? Container()
               : Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Icon(
-                    Icons.camera_alt_outlined,
-                    color: Colors.grey,
+                  child: GestureDetector(
+                    onTap: () {
+                      pickImage(source: ImageSource.camera);
+                    },
+                    child: Icon(
+                      Icons.camera_alt_outlined,
+                      color: Colors.grey,
+                    ),
                   ),
                 ),
           isWriting
@@ -332,6 +341,15 @@ class _ChatScreenState extends State<ChatScreen> {
       textieldController.text = "";
     });
     _repository.addMessageToDb(_message, sender, widget.receiver);
+  }
+
+  pickImage({@required ImageSource source}) async {
+    File selectedImage = await Utils.pickImage(source: source);
+    _repository.uploadImage(
+      image: selectedImage,
+      receiverId: widget.receiver.uid,
+      senderId: _currentUserId,
+    );
   }
 
   CustomAppBar customAppBar(context) {

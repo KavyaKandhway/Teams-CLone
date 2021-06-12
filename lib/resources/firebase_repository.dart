@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:teams_clone/models/message.dart';
 import 'package:teams_clone/models/user.dart';
 import 'package:teams_clone/resources/firebase_methods.dart';
@@ -23,4 +26,14 @@ class FirebaseRepository {
   Future<void> addMessageToDb(
           Message message, UserClass sender, UserClass receiver) =>
       _firebaseMethods.addMessageToDb(message, sender, receiver);
+
+  void uploadImage(
+          {@required File image,
+          @required String receiverId,
+          @required String senderId}) =>
+      _firebaseMethods.uploadImage(
+        image,
+        receiverId,
+        senderId,
+      );
 }
