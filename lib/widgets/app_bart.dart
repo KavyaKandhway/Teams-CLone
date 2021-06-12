@@ -18,17 +18,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Container(
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: Colors.black,
+        color: Colors.black12,
         border: Border(
           bottom: BorderSide(
-            color: Colors.black,
+            color: Colors.black12,
             width: 1.4,
             style: BorderStyle.solid,
           ),
         ),
       ),
       child: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.black12,
         elevation: 0,
         leading: leading,
         actions: actions,

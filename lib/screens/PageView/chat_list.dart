@@ -52,7 +52,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.black12,
       appBar: customAppBar(context),
       floatingActionButton: NewChatButton(),
       body: ChatListContainer(currentUserId),
@@ -71,51 +71,94 @@ class ChatListContainer extends StatefulWidget {
 class _ChatListContainerState extends State<ChatListContainer> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView.builder(
-        padding: EdgeInsets.all(10),
-        itemCount: 2,
-        itemBuilder: (context, index) {
-          return CustomTile(
-            subtitle: Text("hello"),
-            mini: false,
-            onTap: () {},
-            title: Text(
-              "Jesus",
-              style: TextStyle(
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, "/search_screen");
+            },
+            child: Container(
+              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+              height: 50,
+              decoration: BoxDecoration(
                 color: Colors.black,
-                fontSize: 14,
               ),
-            ),
-            leading: Container(
-              constraints: BoxConstraints(
-                maxHeight: 60,
-                maxWidth: 60,
-              ),
-              child: Stack(
+              child: Row(
                 children: [
-                  CircleAvatar(
-                      maxRadius: 40,
-                      backgroundColor: Colors.blueAccent,
-                      backgroundImage: NetworkImage(
-                          "https://th.bing.com/th/id/Rc49055e5e2b50f9583c751eb70b3026f?rik=gwqo8ogorv%2blIA&riu=http%3a%2f%2fwww.fotoplex.co.uk%2fapp%2fuploads%2f2018%2f08%2fReligious-Icon-2.jpg&ehk=nwp3lNk2nJVacDRV7Fa9EiVaPxlBV84A7WDW3Z5qfIM%3d&risl=&pid=ImgRaw")),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Container(
-                      height: 15,
-                      width: 15,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.green,
-                          border: Border.all(color: Colors.green, width: 2)),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.grey.shade300,
                     ),
-                  )
+                  ),
+                  Text(
+                    "Search",
+                    style: TextStyle(color: Colors.grey, fontSize: 18),
+                  ),
                 ],
               ),
             ),
-          );
-        },
-      ),
+          ),
+        ),
+        Container(
+          child: Expanded(
+            child: SizedBox(
+              height: 400,
+              child: ListView.builder(
+                padding: EdgeInsets.all(10),
+                itemCount: 2,
+                itemBuilder: (context, index) {
+                  return CustomTile(
+                    subtitle: Text(
+                      "hello",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    mini: false,
+                    onTap: () {},
+                    title: Text(
+                      "Jesus",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                    ),
+                    leading: Container(
+                      constraints: BoxConstraints(
+                        maxHeight: 60,
+                        maxWidth: 60,
+                      ),
+                      child: Stack(
+                        children: [
+                          CircleAvatar(
+                              maxRadius: 40,
+                              backgroundColor: Colors.blueAccent,
+                              backgroundImage: NetworkImage(
+                                  "https://th.bing.com/th/id/Rc49055e5e2b50f9583c751eb70b3026f?rik=gwqo8ogorv%2blIA&riu=http%3a%2f%2fwww.fotoplex.co.uk%2fapp%2fuploads%2f2018%2f08%2fReligious-Icon-2.jpg&ehk=nwp3lNk2nJVacDRV7Fa9EiVaPxlBV84A7WDW3Z5qfIM%3d&risl=&pid=ImgRaw")),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Container(
+                              height: 15,
+                              width: 15,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.green,
+                                  border: Border.all(
+                                      color: Colors.green, width: 2)),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -138,7 +181,7 @@ class UserCircle extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: Text(
-              text,
+              (text == null) ? "#" : text,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
