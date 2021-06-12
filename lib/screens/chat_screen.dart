@@ -57,7 +57,7 @@ class _ChatScreenState extends State<ChatScreen> {
           .collection(MESSAGES_COLLECTION)
           .doc(_currentUserId)
           .collection(widget.receiver.uid)
-          .orderBy(TIMESTAMP_FIELD, descending: false)
+          .orderBy(TIMESTAMP_FIELD, descending: true)
           .snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.data == null) {
@@ -68,6 +68,7 @@ class _ChatScreenState extends State<ChatScreen> {
         return ListView.builder(
           padding: EdgeInsets.all(10),
           itemCount: snapshot.data.docs.length,
+          reverse: true,
           itemBuilder: (context, index) {
             return chatMessageItem(snapshot.data.docs[index]);
           },
@@ -129,7 +130,6 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget receiverLayout(Message message) {
     Radius messageRadius = Radius.circular(10);
     return Container(
-      width: 10,
       margin: EdgeInsets.only(top: 12),
       constraints: BoxConstraints(
         maxWidth: MediaQuery.of(context).size.width * 0.65,
