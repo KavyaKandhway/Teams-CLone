@@ -17,13 +17,25 @@ class FirebaseMethods {
   static final FirebaseFirestore firestore = FirebaseFirestore.instance;
   firebase_storage.Reference _storageReference;
   //user class
+
+  static final CollectionReference _userCollection =
+      firestore.collection(USERS_COLLECTION);
   UserClass userClass = UserClass();
+
   Future<User> getCurrentUser() async {
     Firebase.initializeApp();
     FirebaseAuth _auth = FirebaseAuth.instance;
     User currentUser;
     currentUser = await _auth.currentUser;
     return currentUser;
+  }
+
+  Future<UserClass> getUserDetails() async {
+    User currentUser = await getCurrentUser();
+
+    DocumentSnapshot documentSnapshot =
+        await _userCollection.doc(currentUser.uid).get();
+    return UserClass.fromMap(documentSnapshot.data());
   }
 
   Future<User> signIn() async {

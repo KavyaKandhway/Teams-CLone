@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:teams_clone/utils/call_utilities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -136,7 +136,6 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   getMessage(Message message) {
-    print("message type=" + message.type);
     if (message.type == MESSAGE_TYPE_IMAGE) {
       if (message.photoUrl != null) {
         return CachedImage(url: message.photoUrl);
@@ -399,7 +398,15 @@ class _ChatScreenState extends State<ChatScreen> {
         ],
       ),
       actions: [
-        IconButton(icon: Icon(Icons.videocam_outlined), onPressed: () {}),
+        IconButton(
+            icon: Icon(Icons.videocam_outlined),
+            onPressed: () {
+              CallUtils.dial(
+                from: sender,
+                to: widget.receiver,
+                context: context,
+              );
+            }),
         IconButton(icon: Icon(Icons.phone_enabled_outlined), onPressed: () {}),
       ],
     );

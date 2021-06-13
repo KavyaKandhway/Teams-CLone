@@ -1,3 +1,4 @@
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,6 +8,7 @@ import 'package:teams_clone/resources/firebase_repository.dart';
 import 'package:teams_clone/screens/home_screen.dart';
 import 'package:teams_clone/screens/login_screen.dart';
 import 'package:teams_clone/screens/search_screen.dart';
+import 'package:teams_clone/provider/user_provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,8 +23,13 @@ class _MyAppState extends State<MyApp> {
   FirebaseRepository _repository = FirebaseRepository();
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ImageUploadProvider>(
-      create: (context) => ImageUploadProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ImageUploadProvider()),
+        ChangeNotifierProvider(
+          create: (_) => UserProvider(),
+        ),
+      ],
       child: MaterialApp(
         title: "Teams Clone",
         theme: ThemeData.light().copyWith(
