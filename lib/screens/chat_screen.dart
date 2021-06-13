@@ -4,12 +4,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:teams_clone/constants/strings.dart';
+import 'package:teams_clone/enum/view_state.dart';
 import 'package:teams_clone/models/message.dart';
 import 'package:teams_clone/models/user.dart';
+import 'package:teams_clone/provider/image_upload_provider.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
 import 'package:teams_clone/utils/utilities.dart';
 import 'package:teams_clone/widgets/app_bart.dart';
+import 'package:teams_clone/widgets/cached_image.dart';
 import 'package:teams_clone/widgets/custom_tile.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -22,6 +26,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   TextEditingController textieldController = TextEditingController();
   FirebaseRepository _repository = FirebaseRepository();
+  ImageUploadProvider _imageUploadProvider;
   UserClass sender;
   String _currentUserId;
   bool isWriting = false;
@@ -43,14 +48,23 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black12,
-      appBar: customAppBar(context),
-      body: Column(
-        children: [
-          Flexible(child: messageList()),
-          chatControls(),
-        ],
+    _imageUploadProvider = Provider.of<ImageUploadProvider>(context);
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.black12,
+        appBar: customAppBar(context),
+        body: Column(
+          children: [
+            Flexible(child: messageList()),
+            _imageUploadProvider.getViewState == ViewState.LOADING
+                ? Container(
+                    alignment: Alignment.centerRight,
+                    margin: EdgeInsets.only(right: 15),
+                    child: CircularProgressIndicator())
+                : Container(),
+            chatControls(),
+          ],
+        ),
       ),
     );
   }
@@ -122,13 +136,22 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   getMessage(Message message) {
-    return Text(
-      message.message,
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 16.0,
-      ),
-    );
+    print("message type=" + message.type);
+    if (message.type == MESSAGE_TYPE_IMAGE) {
+      if (message.photoUrl != null) {
+        return CachedImage(url: message.photoUrl);
+      } else {
+        return Text("Url was null");
+      }
+    } else {
+      return Text(
+        message.message,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 16.0,
+        ),
+      );
+    }
   }
 
   Widget receiverLayout(Message message) {
@@ -199,6 +222,9 @@ class _ChatScreenState extends State<ChatScreen> {
                         title: "Media",
                         subtitle: "Share Photos and Videos",
                         icon: Icons.camera_alt_outlined,
+                        onTap: () {
+                          pickImage(source: ImageSource.gallery);
+                        },
                       ),
                       ModalTile(
                         title: "Attach",
@@ -346,10 +372,10 @@ class _ChatScreenState extends State<ChatScreen> {
   pickImage({@required ImageSource source}) async {
     File selectedImage = await Utils.pickImage(source: source);
     _repository.uploadImage(
-      image: selectedImage,
-      receiverId: widget.receiver.uid,
-      senderId: _currentUserId,
-    );
+        image: selectedImage,
+        receiverId: widget.receiver.uid,
+        senderId: _currentUserId,
+        imageUploadProvider: _imageUploadProvider);
   }
 
   CustomAppBar customAppBar(context) {
@@ -384,16 +410,19 @@ class ModalTile extends StatelessWidget {
   final String title;
   final String subtitle;
   final IconData icon;
+  final Function onTap;
   const ModalTile({
-    this.title,
-    this.icon,
-    this.subtitle,
+    @required this.title,
+    @required this.icon,
+    @required this.subtitle,
+    this.onTap,
   });
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15),
       child: CustomTile(
+        onTap: onTap,
         mini: false,
         leading: Container(
           margin: EdgeInsets.only(right: 10),

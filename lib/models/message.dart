@@ -50,5 +50,6 @@ class Message {
     this.type = map['type'];
     this.message = map['message'];
     this.timeStamp = map['timestamp'];
+    this.photoUrl = map['photoUrl'];
   }
 }

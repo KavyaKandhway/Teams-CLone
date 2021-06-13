@@ -8,6 +8,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:teams_clone/constants/strings.dart';
 import 'package:teams_clone/models/message.dart';
 import 'package:teams_clone/models/user.dart';
+import 'package:teams_clone/provider/image_upload_provider.dart';
 import 'package:teams_clone/utils/utilities.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
@@ -136,8 +137,11 @@ class FirebaseMethods {
         .add(map);
   }
 
-  void uploadImage(File image, String receiverId, String senderId) async {
+  void uploadImage(File image, String receiverId, String senderId,
+      ImageUploadProvider imageUploadProvider) async {
+    imageUploadProvider.setToLoading();
     String url = await uploadImageToStorage(image);
+    imageUploadProvider.setToIdle();
     setImageMsg(url, receiverId, senderId);
   }
 }

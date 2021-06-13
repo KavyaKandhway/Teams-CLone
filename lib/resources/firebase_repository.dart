@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:teams_clone/models/message.dart';
 import 'package:teams_clone/models/user.dart';
+import 'package:teams_clone/provider/image_upload_provider.dart';
 import 'package:teams_clone/resources/firebase_methods.dart';
 
 class FirebaseRepository {
@@ -30,10 +31,12 @@ class FirebaseRepository {
   void uploadImage(
           {@required File image,
           @required String receiverId,
-          @required String senderId}) =>
+          @required String senderId,
+          @required ImageUploadProvider imageUploadProvider}) =>
       _firebaseMethods.uploadImage(
         image,
         receiverId,
         senderId,
+        imageUploadProvider,
       );
 }
