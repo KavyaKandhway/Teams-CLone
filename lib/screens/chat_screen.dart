@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:flutter/scheduler.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:teams_clone/utils/call_utilities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,6 +17,7 @@ import 'package:teams_clone/utils/utilities.dart';
 import 'package:teams_clone/widgets/app_bart.dart';
 import 'package:teams_clone/widgets/cached_image.dart';
 import 'package:teams_clone/widgets/custom_tile.dart';
+import 'package:teams_clone/provider/user_provider.dart';
 
 class ChatScreen extends StatefulWidget {
   final UserClass receiver;
@@ -26,6 +29,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   TextEditingController textieldController = TextEditingController();
   FirebaseRepository _repository = FirebaseRepository();
+  UserProvider userProvider;
   ImageUploadProvider _imageUploadProvider;
   UserClass sender;
   String _currentUserId;
@@ -34,6 +38,11 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      userProvider = Provider.of<UserProvider>(context, listen: false);
+      userProvider.refreshUser();
+    });
+
     _repository.getCurentUser().then((user) {
       _currentUserId = user.uid;
       setState(() {
@@ -138,7 +147,12 @@ class _ChatScreenState extends State<ChatScreen> {
   getMessage(Message message) {
     if (message.type == MESSAGE_TYPE_IMAGE) {
       if (message.photoUrl != null) {
-        return CachedImage(url: message.photoUrl);
+        return CachedImage(
+          message.photoUrl,
+          height: 250,
+          width: 250,
+          radius: 10,
+        );
       } else {
         return Text("Url was null");
       }
@@ -400,7 +414,10 @@ class _ChatScreenState extends State<ChatScreen> {
       actions: [
         IconButton(
             icon: Icon(Icons.videocam_outlined),
-            onPressed: () {
+            onPressed: () async {
+              await _handleCameraAndMic(Permission.camera);
+              await _handleCameraAndMic(Permission.microphone);
+
               CallUtils.dial(
                 from: sender,
                 to: widget.receiver,
@@ -410,6 +427,11 @@ class _ChatScreenState extends State<ChatScreen> {
         IconButton(icon: Icon(Icons.phone_enabled_outlined), onPressed: () {}),
       ],
     );
+  }
+
+  Future<void> _handleCameraAndMic(Permission permission) async {
+    final status = await permission.request();
+    print(status);
   }
 }
 

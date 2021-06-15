@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:teams_clone/models/user.dart';
 import 'package:teams_clone/resources/call_methods.dart';
@@ -25,7 +26,12 @@ class CallUtils {
     if (callMade) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => CallScreen(call: call)),
+        MaterialPageRoute(
+          builder: (context) => CallScreen(
+            call: call,
+            role: ClientRole.Broadcaster,
+          ),
+        ),
       );
     }
   }

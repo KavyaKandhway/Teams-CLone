@@ -24,7 +24,11 @@ class PickupLayout extends StatelessWidget {
               if (snapshot.hasData && snapshot.data.data() != null) {
                 print("not null");
                 Call call = Call.fromMap(snapshot.data.data());
-                return PickupScreen(call: call);
+                if (!call.hasDialed) {
+                  return PickupScreen(call: call);
+                } else {
+                  return scaffold;
+                }
               }
               return scaffold;
             },
