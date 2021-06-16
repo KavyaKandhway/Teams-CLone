@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:teams_clone/enum/user_state.dart';
+import 'package:teams_clone/resources/firebase_repository.dart';
 import 'package:teams_clone/utils/universal_variables.dart';
 import 'package:teams_clone/provider/user_provider.dart';
 import 'PageView/chat_list.dart';
@@ -12,10 +14,10 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   PageController pageController;
   int _page = 0;
-
+  FirebaseRepository _firebaseRepository = FirebaseRepository();
   UserProvider userProvider;
   @override
   void initState() {
@@ -25,9 +27,54 @@ class _HomeScreenState extends State<HomeScreen> {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       userProvider = Provider.of<UserProvider>(context, listen: false);
       userProvider.refreshUser();
+      _firebaseRepository.setUserState(
+          userId: userProvider.getUSer.uid, userState: UserState.Online);
     });
-
+    WidgetsBinding.instance.addObserver(this);
     pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    String currentUserId =
+        (userProvider != null && userProvider.getUSer != null)
+            ? userProvider.getUSer.uid
+            : "";
+    super.didChangeAppLifecycleState(state);
+
+    switch (state) {
+      case AppLifecycleState.resumed:
+        currentUserId != null
+            ? _firebaseRepository.setUserState(
+                userId: currentUserId, userState: UserState.Online)
+            : print("resumed state");
+        break;
+      case AppLifecycleState.inactive:
+        currentUserId != null
+            ? _firebaseRepository.setUserState(
+                userId: currentUserId, userState: UserState.Offline)
+            : print("inactive state");
+        break;
+      case AppLifecycleState.paused:
+        currentUserId != null
+            ? _firebaseRepository.setUserState(
+                userId: currentUserId, userState: UserState.Waiting)
+            : print("paused state");
+        break;
+      case AppLifecycleState.detached:
+        currentUserId != null
+            ? _firebaseRepository.setUserState(
+                userId: currentUserId, userState: UserState.Offline)
+            : print("detached state");
+        break;
+    }
   }
 
   void onPageChanged(int page) {

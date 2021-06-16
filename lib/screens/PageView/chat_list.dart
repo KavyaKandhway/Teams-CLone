@@ -1,32 +1,22 @@
 import 'dart:ffi';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:teams_clone/models/contact.dart';
+import 'package:teams_clone/provider/user_provider.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
+import 'package:teams_clone/screens/PageView/widgets/contact_view.dart';
+import 'package:teams_clone/screens/PageView/widgets/new_chat_button.dart';
+import 'package:teams_clone/screens/PageView/widgets/user_circle.dart';
 import 'package:teams_clone/utils/utilities.dart';
 import 'package:teams_clone/widgets/app_bart.dart';
 import 'package:teams_clone/widgets/custom_tile.dart';
+import 'package:teams_clone/screens/PageView/widgets/quiet_box.dart';
 
 final FirebaseRepository _repository = FirebaseRepository();
 
-class ChatListScreen extends StatefulWidget {
-  @override
-  _ChatListScreenState createState() => _ChatListScreenState();
-}
-
-class _ChatListScreenState extends State<ChatListScreen> {
-  String currentUserId;
-  String initials;
-  @override
-  void initState() {
-    super.initState();
-    _repository.getCurentUser().then((user) {
-      setState(() {
-        currentUserId = user.uid;
-        initials = Utils.getInitials(user.displayName);
-      });
-    });
-  }
-
+class ChatListScreen extends StatelessWidget {
   CustomAppBar customAppBar(BuildContext context) {
     return CustomAppBar(
       actions: [
@@ -45,7 +35,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
       ],
       centerTitle: false,
       title: Text("Chat"),
-      leading: UserCircle(initials),
+      leading: UserCircle(),
     );
   }
 
@@ -55,22 +45,18 @@ class _ChatListScreenState extends State<ChatListScreen> {
       backgroundColor: Colors.black12,
       appBar: customAppBar(context),
       floatingActionButton: NewChatButton(),
-      body: ChatListContainer(currentUserId),
+      body: ChatListContainer(),
     );
   }
 }
 
-class ChatListContainer extends StatefulWidget {
-  final String currentUserId;
-  ChatListContainer(this.currentUserId);
+class ChatListContainer extends StatelessWidget {
+  final FirebaseRepository _firebaseRepository = FirebaseRepository();
 
-  @override
-  _ChatListContainerState createState() => _ChatListContainerState();
-}
-
-class _ChatListContainerState extends State<ChatListContainer> {
   @override
   Widget build(BuildContext context) {
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+
     return Column(
       children: [
         Padding(
@@ -107,51 +93,30 @@ class _ChatListContainerState extends State<ChatListContainer> {
           child: Expanded(
             child: SizedBox(
               height: 400,
-              child: ListView.builder(
-                padding: EdgeInsets.all(10),
-                itemCount: 2,
-                itemBuilder: (context, index) {
-                  return CustomTile(
-                    subtitle: Text(
-                      "hello",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    mini: false,
-                    onTap: () {},
-                    title: Text(
-                      "Jesus",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
-                    ),
-                    leading: Container(
-                      constraints: BoxConstraints(
-                        maxHeight: 60,
-                        maxWidth: 60,
-                      ),
-                      child: Stack(
-                        children: [
-                          CircleAvatar(
-                              maxRadius: 40,
-                              backgroundColor: Colors.blueAccent,
-                              backgroundImage: NetworkImage(
-                                  "https://th.bing.com/th/id/Rc49055e5e2b50f9583c751eb70b3026f?rik=gwqo8ogorv%2blIA&riu=http%3a%2f%2fwww.fotoplex.co.uk%2fapp%2fuploads%2f2018%2f08%2fReligious-Icon-2.jpg&ehk=nwp3lNk2nJVacDRV7Fa9EiVaPxlBV84A7WDW3Z5qfIM%3d&risl=&pid=ImgRaw")),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: Container(
-                              height: 15,
-                              width: 15,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.green,
-                                  border: Border.all(
-                                      color: Colors.green, width: 2)),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+              child: StreamBuilder<QuerySnapshot>(
+                stream: _firebaseRepository.fetchContacts(
+                    userId: userProvider.getUSer.uid),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var docList = snapshot.data.docs;
+
+                    if (docList.isEmpty) {
+                      return QuietBox();
+                    }
+                    return ListView.builder(
+                      padding: EdgeInsets.all(10),
+                      itemCount: docList.length,
+                      itemBuilder: (context, index) {
+                        Contact contact =
+                            Contact.fromMap(docList[index].data());
+                        return ContactView(
+                          contact: contact,
+                        );
+                      },
+                    );
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(),
                   );
                 },
               ),
@@ -159,68 +124,6 @@ class _ChatListContainerState extends State<ChatListContainer> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class UserCircle extends StatelessWidget {
-  final String text;
-  UserCircle(this.text);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 30,
-      width: 30,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black, width: 2),
-        shape: BoxShape.circle,
-        color: Colors.indigo,
-      ),
-      child: Stack(
-        children: [
-          Align(
-            alignment: Alignment.center,
-            child: Text(
-              (text == null) ? "#" : text,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontSize: 13,
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Container(
-              height: 12,
-              width: 12,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.green, width: 2),
-                color: Colors.green,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class NewChatButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.indigo,
-        borderRadius: BorderRadius.circular(50),
-      ),
-      child: Icon(
-        Icons.edit,
-        color: Colors.white,
-        size: 25,
-      ),
-      padding: EdgeInsets.all(15),
     );
   }
 }

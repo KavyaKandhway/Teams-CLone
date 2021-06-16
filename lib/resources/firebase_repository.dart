@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:teams_clone/enum/user_state.dart';
 import 'package:teams_clone/models/message.dart';
 import 'package:teams_clone/models/user.dart';
 import 'package:teams_clone/provider/image_upload_provider.dart';
@@ -41,4 +43,21 @@ class FirebaseRepository {
         senderId,
         imageUploadProvider,
       );
+
+  Stream<QuerySnapshot> fetchContacts({String userId}) =>
+      _firebaseMethods.fetchContacts(userId: userId);
+
+  Future<UserClass> getUserDetailsById(id) =>
+      _firebaseMethods.getUserDetailsById(id);
+
+  Stream<QuerySnapshot> fetchLastMessageBetween(
+          {@required String senderId, @required String receiverId}) =>
+      _firebaseMethods.fetchLastMessageBetween(
+          senderId: senderId, receiverId: receiverId);
+
+  Stream<DocumentSnapshot> getUsersStream({@required String uid}) =>
+      _firebaseMethods.getUsersStream(uid: uid);
+
+  void setUserState({@required String userId, @required UserState userState}) =>
+      _firebaseMethods.setUserState(userId: userId, userState: userState);
 }
