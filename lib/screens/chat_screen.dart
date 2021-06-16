@@ -408,7 +408,7 @@ class _ChatScreenState extends State<ChatScreen> {
           SizedBox(
             width: 10,
           ),
-          Text(widget.receiver.name),
+          Text(widget.receiver.name.split(' ')[0]),
         ],
       ),
       actions: [
