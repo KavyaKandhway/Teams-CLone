@@ -114,7 +114,7 @@ class _CallScreenState extends State<CallScreen> {
 
     await _initAgoraRtcEngine();
     _addAgoraEventHandlers();
-    await _engine.joinChannel(token, "kavyachannel", null, 0);
+    await _engine.joinChannel(null, widget.call.channelId, null, 0);
   }
 
   addPostFrameCallBack() {
