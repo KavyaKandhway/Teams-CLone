@@ -4,9 +4,10 @@ import 'package:teams_clone/models/contact.dart';
 import 'package:teams_clone/models/user.dart';
 import 'package:teams_clone/provider/user_provider.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
+import 'package:teams_clone/screens/PageView/chat_screen.dart';
 import 'package:teams_clone/screens/PageView/widgets/last_message_container.dart';
 import 'package:teams_clone/screens/PageView/widgets/online_dot_indicator.dart';
-import 'package:teams_clone/screens/chat_screen.dart';
+
 import 'package:teams_clone/widgets/cached_image.dart';
 import 'package:teams_clone/widgets/custom_tile.dart';
 

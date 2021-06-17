@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:teams_clone/models/user.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
-import 'package:teams_clone/screens/chat_screen.dart';
+import 'package:teams_clone/screens/PageView/chat_screen.dart';
 import 'package:teams_clone/widgets/custom_tile.dart';
 
 class SearchScreen extends StatefulWidget {
