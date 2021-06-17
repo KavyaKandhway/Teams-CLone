@@ -82,12 +82,18 @@ class FirebaseMethods {
         .set(userClass.toMap(userClass));
   }
 
-  Future<void> signOut() async {
+  Future<bool> signOut() async {
     Firebase.initializeApp();
     FirebaseAuth _auth = FirebaseAuth.instance;
-    await _googleSignIn.disconnect();
-    await _googleSignIn.signOut();
-    return await _auth.signOut();
+    try {
+      await _googleSignIn.disconnect();
+      await _googleSignIn.signOut();
+      await _auth.signOut();
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 
   Future<List<UserClass>> fetchAllUsers(User user) async {
