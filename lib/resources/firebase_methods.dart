@@ -228,6 +228,7 @@ class FirebaseMethods {
 
   void setUserState({@required String userId, @required UserState userState}) {
     int stateNum = Utils.stateToNum(userState);
+
     _userCollection.doc(userId).update({
       "state": stateNum,
     });

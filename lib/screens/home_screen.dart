@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -24,13 +25,17 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     // TODO: implement initState
     super.initState();
 
-    SchedulerBinding.instance.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
       userProvider = Provider.of<UserProvider>(context, listen: false);
       userProvider.refreshUser();
+
+      User user = await _firebaseRepository.getCurentUser();
       _firebaseRepository.setUserState(
-          userId: userProvider.getUSer.uid, userState: UserState.Online);
+          userId: user.uid, userState: UserState.Online);
     });
+
     WidgetsBinding.instance.addObserver(this);
+
     pageController = PageController();
   }
 
