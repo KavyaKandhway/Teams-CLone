@@ -36,7 +36,6 @@ class _ChatScreenState extends State<ChatScreen> {
   bool isWriting = false;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       userProvider = Provider.of<UserProvider>(context, listen: false);

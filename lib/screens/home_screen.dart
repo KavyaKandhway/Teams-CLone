@@ -5,6 +5,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:teams_clone/enum/user_state.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
+import 'package:teams_clone/screens/PageView/group_video_call.dart';
 import 'package:teams_clone/utils/universal_variables.dart';
 import 'package:teams_clone/provider/user_provider.dart';
 import 'PageView/chat_list.dart';
@@ -105,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               child: ChatListScreen(),
             ),
             Center(
-              child: Text("Meet Screen"),
+              child: GroupVideoCallScreen(),
             ),
             Center(
               child: Text("Contact List"),
