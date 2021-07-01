@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'package:permission_handler/permission_handler.dart';
+import 'package:teams_clone/models/user.dart';
+import 'package:teams_clone/resources/firebase_repository.dart';
+import 'package:teams_clone/utils/group_call_utilities.dart';
+import 'package:teams_clone/utils/permission.dart';
+
 class CreateRoomDialog extends StatefulWidget {
   @override
   _CreateRoomDialogState createState() => _CreateRoomDialogState();
@@ -8,9 +14,22 @@ class CreateRoomDialog extends StatefulWidget {
 
 class _CreateRoomDialogState extends State<CreateRoomDialog> {
   String roomId = "";
+  FirebaseRepository _repository = FirebaseRepository();
+  String _currentUserId;
+  UserClass sender;
   @override
   void initState() {
     roomId = generateRandomString(8);
+    _repository.getCurentUser().then((user) {
+      _currentUserId = user.uid;
+      setState(() {
+        sender = UserClass(
+          uid: user.uid,
+          name: user.displayName,
+          profilePhoto: user.photoURL,
+        );
+      });
+    });
     super.initState();
   }
 
@@ -24,7 +43,6 @@ class _CreateRoomDialogState extends State<CreateRoomDialog> {
 
   @override
   Widget build(BuildContext context) {
-    print("create room");
     return AlertDialog(
       backgroundColor: Colors.grey.shade800,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -81,23 +99,13 @@ class _CreateRoomDialogState extends State<CreateRoomDialog> {
                     borderRadius: BorderRadius.circular(6)),
                 child: TextButton(
                   onPressed: () async {
-                    null;
-                    // bool isPermissionGranted =
-                    //     await handlePermissionsForCall(context);
-                    // if (isPermissionGranted) {
-                    //   Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //           builder: (context) => VideoCallScreen(
-                    //                 channelName: roomId,
-                    //               )));
-                    // } else {
-                    //   Get.snackbar("Failed",
-                    //       "Microphone Permission Required for Video Call.",
-                    //       backgroundColor: Colors.white,
-                    //       colorText: Color(0xFF1A1E78),
-                    //       snackPosition: SnackPosition.BOTTOM);
-                    // }
+                    await handleCameraAndMic(Permission.camera);
+                    await handleCameraAndMic(Permission.microphone);
+                    GroupCallUtils.dial(
+                      context: context,
+                      from: sender,
+                      roomId: roomId,
+                    );
                   },
                   child: Container(
                     width: 80,

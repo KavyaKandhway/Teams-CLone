@@ -9,8 +9,8 @@ class JoinRoomDialog extends StatelessWidget {
         backgroundColor: Colors.grey.shade800,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         title: Text(
-          "Room Created",
-          style: TextStyle(color: Colors.white),
+          "Join Room",
+          style: TextStyle(color: Colors.white, fontSize: 25),
         ),
         content: Expanded(
           child: SizedBox(

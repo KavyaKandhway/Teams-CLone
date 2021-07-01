@@ -18,6 +18,7 @@ import 'package:teams_clone/widgets/app_bart.dart';
 import 'package:teams_clone/widgets/cached_image.dart';
 import 'package:teams_clone/widgets/custom_tile.dart';
 import 'package:teams_clone/provider/user_provider.dart';
+import 'package:teams_clone/utils/permission.dart';
 
 class ChatScreen extends StatefulWidget {
   final UserClass receiver;
@@ -414,8 +415,8 @@ class _ChatScreenState extends State<ChatScreen> {
         IconButton(
             icon: Icon(Icons.videocam_outlined),
             onPressed: () async {
-              await _handleCameraAndMic(Permission.camera);
-              await _handleCameraAndMic(Permission.microphone);
+              await handleCameraAndMic(Permission.camera);
+              await handleCameraAndMic(Permission.microphone);
 
               CallUtils.dial(
                 from: sender,
@@ -426,11 +427,6 @@ class _ChatScreenState extends State<ChatScreen> {
         IconButton(icon: Icon(Icons.phone_enabled_outlined), onPressed: () {}),
       ],
     );
-  }
-
-  Future<void> _handleCameraAndMic(Permission permission) async {
-    final status = await permission.request();
-    print(status);
   }
 }
 
