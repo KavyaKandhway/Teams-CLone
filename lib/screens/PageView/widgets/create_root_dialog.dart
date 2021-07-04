@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
-
+import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:teams_clone/models/user.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
 import 'package:teams_clone/utils/group_call_utilities.dart';
 import 'package:teams_clone/utils/permission.dart';
+import 'package:flutter_share/flutter_share.dart';
 
 class CreateRoomDialog extends StatefulWidget {
   @override
@@ -35,10 +36,19 @@ class _CreateRoomDialogState extends State<CreateRoomDialog> {
 
   String generateRandomString(int len) {
     var r = Random();
-    const _chars =
-        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    const _chars = '1234567890';
     return List.generate(len, (index) => _chars[r.nextInt(_chars.length)])
         .join();
+  }
+
+  void shareToApps(String roomId) async {
+    await FlutterShare.share(
+      title: 'Invitation for group video call',
+      text: 'Hey there,\nEnter room ID to join the call.\n' +
+          'ID- *' +
+          roomId +
+          '*',
+    );
   }
 
   @override
@@ -56,8 +66,35 @@ class _CreateRoomDialogState extends State<CreateRoomDialog> {
           Image.asset(
             'images/room_created_vector.png',
           ),
-          Text("Room id : " + roomId,
-              style: TextStyle(color: Colors.white, fontSize: 20)),
+          Text(
+            "Room ID",
+            style: TextStyle(
+                fontSize: 20, color: Colors.white, fontWeight: FontWeight.w300),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          GestureDetector(
+            onTap: () {
+              Clipboard.setData(ClipboardData(text: roomId));
+            },
+            child: Container(
+              margin: EdgeInsets.all(5),
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  color: Colors.grey.shade600,
+                  borderRadius: BorderRadius.circular(3),
+                  border: Border.all(color: Colors.grey.shade200, width: 1)),
+              child: Text(
+                roomId,
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+          Text(
+            "Copy to clipboard",
+            style: TextStyle(fontSize: 12, color: Colors.white),
+          ),
           const SizedBox(
             height: 20,
           ),
@@ -72,7 +109,7 @@ class _CreateRoomDialogState extends State<CreateRoomDialog> {
                 ),
                 child: TextButton(
                   onPressed: () {
-                    null; // shareToApps(roomId);
+                    shareToApps(roomId);
                   },
                   child: Container(
                     width: 80,
