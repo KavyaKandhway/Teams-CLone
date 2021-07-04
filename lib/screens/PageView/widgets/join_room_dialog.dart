@@ -1,7 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:teams_clone/models/user.dart';
+import 'package:teams_clone/resources/firebase_repository.dart';
+import 'package:teams_clone/utils/group_call_utilities.dart';
+import 'package:teams_clone/utils/permission.dart';
 
-class JoinRoomDialog extends StatelessWidget {
+class JoinRoomDialog extends StatefulWidget {
+  @override
+  _JoinRoomDialogState createState() => _JoinRoomDialogState();
+}
+
+class _JoinRoomDialogState extends State<JoinRoomDialog> {
   final TextEditingController roomTxtController = TextEditingController();
+  UserClass sender;
+  FirebaseRepository _repository = FirebaseRepository();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _repository.getCurentUser().then((user) {
+      setState(() {
+        sender = UserClass(
+          uid: user.uid,
+          name: user.displayName,
+          profilePhoto: user.photoURL,
+        );
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,30 +76,13 @@ class JoinRoomDialog extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6)),
                   child: TextButton(
                     onPressed: () async {
-                      null;
-                      // if (roomTxtController.text.isNotEmpty) {
-                      //   bool isPermissionGranted =
-                      //       await handlePermissionsForCall(context);
-                      //   if (isPermissionGranted) {
-                      //     Navigator.push(
-                      //         context,
-                      //         MaterialPageRoute(
-                      //             builder: (context) => VideoCallScreen(
-                      //                   channelName: roomTxtController.text,
-                      //                 )));
-                      //   } else {
-                      //     Get.snackbar("Failed", "Enter Room-Id to Join.",
-                      //         backgroundColor: Colors.white,
-                      //         colorText: Color(0xFF1A1E78),
-                      //         snackPosition: SnackPosition.BOTTOM);
-                      //   }
-                      // } else {
-                      //   Get.snackbar("Failed",
-                      //       "Microphone Permission Required for Video Call.",
-                      //       backgroundColor: Colors.white,
-                      //       colorText: Color(0xFF1A1E78),
-                      //       snackPosition: SnackPosition.BOTTOM);
-                      // }
+                      await handleCameraAndMic(Permission.camera);
+                      await handleCameraAndMic(Permission.microphone);
+                      GroupCallUtils.dial(
+                        context: context,
+                        from: sender,
+                        roomId: roomTxtController.text,
+                      );
                     },
                     child: Container(
                       width: 100,

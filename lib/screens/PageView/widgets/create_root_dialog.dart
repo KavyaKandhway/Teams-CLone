@@ -16,13 +16,12 @@ class CreateRoomDialog extends StatefulWidget {
 class _CreateRoomDialogState extends State<CreateRoomDialog> {
   String roomId = "";
   FirebaseRepository _repository = FirebaseRepository();
-  String _currentUserId;
+
   UserClass sender;
   @override
   void initState() {
     roomId = generateRandomString(8);
     _repository.getCurentUser().then((user) {
-      _currentUserId = user.uid;
       setState(() {
         sender = UserClass(
           uid: user.uid,
