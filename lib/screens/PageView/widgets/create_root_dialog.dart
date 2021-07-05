@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:teams_clone/models/user.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
+import 'package:teams_clone/screens/PageView/widgets/share_dialog.dart';
 import 'package:teams_clone/utils/group_call_utilities.dart';
 import 'package:teams_clone/utils/permission.dart';
 import 'package:flutter_share/flutter_share.dart';
@@ -38,16 +39,6 @@ class _CreateRoomDialogState extends State<CreateRoomDialog> {
     const _chars = '1234567890';
     return List.generate(len, (index) => _chars[r.nextInt(_chars.length)])
         .join();
-  }
-
-  void shareToApps(String roomId) async {
-    await FlutterShare.share(
-      title: 'Invitation for group video call',
-      text: 'Hey there,\nEnter room ID to join the call.\n' +
-          'ID- *' +
-          roomId +
-          '*',
-    );
   }
 
   @override
@@ -108,7 +99,13 @@ class _CreateRoomDialogState extends State<CreateRoomDialog> {
                 ),
                 child: TextButton(
                   onPressed: () {
-                    shareToApps(roomId);
+                    Navigator.pop(context);
+                    showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (_) {
+                          return ShareDialog(roomId: roomId); //CreateRoomDialog
+                        });
                   },
                   child: Container(
                     width: 80,

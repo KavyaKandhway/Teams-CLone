@@ -5,3 +5,5 @@ const String GROUP_CALL_COLLECTION = "group_call";
 const String CONTACTS_COLLECTION = "contacts";
 const String TIMESTAMP_FIELD = "timestamp";
 const String MESSAGE_TYPE_IMAGE = "image";
+const String MESSAGE_TYPE_TEXT = "text";
+const String MESSAGE_TYPE_CALL = "call";

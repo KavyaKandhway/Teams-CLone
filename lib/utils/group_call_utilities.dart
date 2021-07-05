@@ -10,12 +10,10 @@ class GroupCallUtils {
 
   static dial({UserClass from, String roomId, BuildContext context}) async {
     GroupCall groupCall = GroupCall(
-      callerId: from.uid,
       roomId: roomId,
     );
 
     bool callMade = await groupCallMethods.makeGroupCall(groupCall: groupCall);
-    groupCall.hasDialed = true;
 
     if (callMade) {
       Navigator.push(

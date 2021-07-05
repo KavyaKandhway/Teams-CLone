@@ -10,10 +10,8 @@ class GroupCallMethods {
       callCollection.doc(uid).snapshots();
   Future<bool> makeGroupCall({GroupCall groupCall}) async {
     try {
-      groupCall.hasDialed = true;
       Map<String, dynamic> hasDialedMap = groupCall.toMap(groupCall);
 
-      await callCollection.doc(groupCall.callerId).set(hasDialedMap);
       return true;
     } catch (e) {
       print(e);
@@ -23,7 +21,6 @@ class GroupCallMethods {
 
   Future<bool> endCall({GroupCall groupCall}) async {
     try {
-      await callCollection.doc(groupCall.callerId).delete();
       return true;
     } catch (e) {
       print(e);

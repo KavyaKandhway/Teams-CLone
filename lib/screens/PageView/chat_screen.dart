@@ -19,6 +19,7 @@ import 'package:teams_clone/widgets/cached_image.dart';
 import 'package:teams_clone/widgets/custom_tile.dart';
 import 'package:teams_clone/provider/user_provider.dart';
 import 'package:teams_clone/utils/permission.dart';
+import 'package:teams_clone/widgets/room_id.dart';
 
 class ChatScreen extends StatefulWidget {
   final UserClass receiver;
@@ -157,8 +158,24 @@ class _ChatScreenState extends State<ChatScreen> {
           width: 250,
           radius: 10,
         );
+      } else if (message.type == MESSAGE_TYPE_CALL) {
+        if (message.message.split('-')[1].isNotEmpty) {
+          return RoomID(
+            roomId: message.message.split('-')[1],
+          );
+        } else {
+          return Text("ID is null");
+        }
       } else {
         return Text("Url was null");
+      }
+    } else if (message.type == MESSAGE_TYPE_CALL) {
+      if (message.message.split('-')[1].isNotEmpty) {
+        return RoomID(
+          roomId: message.message.split('-')[1],
+        );
+      } else {
+        return Text("ID is null");
       }
     } else {
       return Text(
@@ -377,7 +394,7 @@ class _ChatScreenState extends State<ChatScreen> {
       senderId: sender.uid,
       message: text,
       timeStamp: Timestamp.now(),
-      type: 'text',
+      type: MESSAGE_TYPE_TEXT,
     );
     setState(() {
       isWriting = false;
