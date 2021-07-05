@@ -72,8 +72,12 @@ class FirebaseMethods {
     userClass = UserClass(
       uid: currentUser.uid,
       email: currentUser.email,
-      name: currentUser.displayName,
-      profilePhoto: currentUser.photoURL,
+      name: currentUser.displayName != null
+          ? currentUser.displayName
+          : currentUser.email.split('@')[0],
+      profilePhoto: currentUser.photoURL != null
+          ? currentUser.photoURL
+          : "https://irisvision.com/wp-content/uploads/2019/01/no-profile-1.png",
       username: username,
     );
     firestore
@@ -91,8 +95,13 @@ class FirebaseMethods {
       await _auth.signOut();
       return true;
     } catch (e) {
-      print(e);
-      return false;
+      try {
+        await _auth.signOut();
+        return true;
+      } catch (ee) {
+        print(ee);
+        return false;
+      }
     }
   }
 

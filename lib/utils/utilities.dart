@@ -14,8 +14,13 @@ class Utils {
 
   static String getInitials(String name) {
     List<String> nameSplit = name.split(" ");
-    String firstNameInitial = nameSplit[0][0];
-    String lastNameInitial = nameSplit[1][0];
+    String firstNameInitial = nameSplit[0][0].toUpperCase();
+    String lastNameInitial;
+    if (nameSplit.length == 1) {
+      lastNameInitial = "";
+    } else {
+      lastNameInitial = nameSplit[1][0].toLowerCase();
+    }
     return firstNameInitial + lastNameInitial;
   }
 

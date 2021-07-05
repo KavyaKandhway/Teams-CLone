@@ -10,7 +10,9 @@ import 'package:teams_clone/screens/login_screen.dart';
 import 'package:teams_clone/screens/search_screen.dart';
 import 'package:teams_clone/provider/user_provider.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 

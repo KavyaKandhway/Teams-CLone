@@ -90,7 +90,9 @@ class _SearchScreenState extends State<SearchScreen> {
         : userList.where((UserClass user) {
             String _getUsername = user.username.toLowerCase();
             String _query = query.toLowerCase();
-            String _getName = user.name.toLowerCase();
+            String _getName = user.name != null
+                ? user.name.toLowerCase()
+                : user.email.split('@')[0].toLowerCase();
             bool matchesUserName = _getUsername.contains(_query);
             bool matchesName = _getName.contains(_query);
             return (matchesName || matchesUserName);
@@ -100,8 +102,12 @@ class _SearchScreenState extends State<SearchScreen> {
       itemBuilder: ((context, index) {
         UserClass searchedUser = UserClass(
           uid: suggestionList[index].uid,
-          profilePhoto: suggestionList[index].profilePhoto,
-          name: suggestionList[index].name,
+          profilePhoto: suggestionList[index].profilePhoto != null
+              ? suggestionList[index].profilePhoto
+              : "https://irisvision.com/wp-content/uploads/2019/01/no-profile-1.png",
+          name: suggestionList[index].name != null
+              ? suggestionList[index].name
+              : suggestionList[index].email.split('@')[0],
           username: suggestionList[index].username,
         );
         return CustomTile(

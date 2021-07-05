@@ -54,7 +54,7 @@ class ViewLayout extends StatelessWidget {
                     )));
       },
       title: Text(
-        contact?.name ?? "..",
+        contact.name != null ? contact.name : contact.email.split('@')[0],
         style: TextStyle(
           color: Colors.white,
           fontSize: 14,
@@ -68,7 +68,9 @@ class ViewLayout extends StatelessWidget {
         child: Stack(
           children: [
             CachedImage(
-              contact.profilePhoto,
+              contact.profilePhoto != null
+                  ? contact.profilePhoto
+                  : "https://irisvision.com/wp-content/uploads/2019/01/no-profile-1.png",
               radius: 80,
               isRound: true,
             ),

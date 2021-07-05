@@ -48,8 +48,12 @@ class _ChatScreenState extends State<ChatScreen> {
       setState(() {
         sender = UserClass(
           uid: user.uid,
-          name: user.displayName,
-          profilePhoto: user.photoURL,
+          name: user.displayName != null
+              ? user.displayName
+              : user.email.split('@')[0],
+          profilePhoto: user.photoURL != null
+              ? user.photoURL
+              : "https://irisvision.com/wp-content/uploads/2019/01/no-profile-1.png",
         );
       });
     });
@@ -408,7 +412,9 @@ class _ChatScreenState extends State<ChatScreen> {
           SizedBox(
             width: 10,
           ),
-          Text(widget.receiver.name.split(' ')[0]),
+          Text(widget.receiver.name.length > 10
+              ? widget.receiver.name.substring(0, 10) + "..."
+              : widget.receiver.name),
         ],
       ),
       actions: [

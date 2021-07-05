@@ -65,7 +65,9 @@ class UserDetailsBody extends StatelessWidget {
       child: Row(
         children: [
           CachedImage(
-            user.profilePhoto,
+            user.profilePhoto != null
+                ? user.profilePhoto
+                : "https://irisvision.com/wp-content/uploads/2019/01/no-profile-1.png",
             isRound: true,
             radius: 50,
           ),
@@ -76,7 +78,7 @@ class UserDetailsBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                user.name,
+                user.name != null ? user.name : user.email.split('@')[0],
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
