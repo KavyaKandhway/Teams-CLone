@@ -1,10 +1,12 @@
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:teams_clone/utils/group_call_utilities.dart';
+import 'package:teams_clone/screens/callScreens/group_call_screen.dart';
+
 import 'package:teams_clone/utils/permission.dart';
 
 class RoomID extends StatelessWidget {
-  String roomId;
+  String? roomId;
   RoomID({this.roomId});
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class RoomID extends StatelessWidget {
           padding: EdgeInsets.only(left: 35),
           width: MediaQuery.of(context).size.width,
           child: Text(
-            "Room ID- " + roomId,
+            "Room ID- " + roomId!,
             textAlign: TextAlign.left,
             style: TextStyle(
               color: Colors.white,
@@ -56,9 +58,14 @@ class RoomID extends StatelessWidget {
                 onPressed: () async {
                   await handleCameraAndMic(Permission.camera);
                   await handleCameraAndMic(Permission.microphone);
-                  GroupCallUtils.dial(
-                    context: context,
-                    roomId: roomId,
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => GroupCallScreen(
+                        channelName: roomId,
+                        role: ClientRole.Broadcaster,
+                      ),
+                    ),
                   );
                 },
                 child: Text(

@@ -33,31 +33,32 @@ class FirebaseRepository {
       _firebaseMethods.addMessageToDb(message, sender, receiver);
 
   void uploadImage(
-          {@required File image,
-          @required String receiverId,
-          @required String senderId,
-          @required ImageUploadProvider imageUploadProvider}) =>
+          {@required File? image,
+          @required String? receiverId,
+          @required String? senderId,
+          @required ImageUploadProvider? imageUploadProvider}) =>
       _firebaseMethods.uploadImage(
-        image,
-        receiverId,
-        senderId,
-        imageUploadProvider,
+        image!,
+        receiverId!,
+        senderId!,
+        imageUploadProvider!,
       );
 
-  Stream<QuerySnapshot> fetchContacts({String userId}) =>
-      _firebaseMethods.fetchContacts(userId: userId);
+  Stream<QuerySnapshot> fetchContacts({String? userId}) =>
+      _firebaseMethods.fetchContacts(userId: userId!);
 
   Future<UserClass> getUserDetailsById(id) =>
       _firebaseMethods.getUserDetailsById(id);
 
   Stream<QuerySnapshot> fetchLastMessageBetween(
-          {@required String senderId, @required String receiverId}) =>
+          {@required String? senderId, @required String? receiverId}) =>
       _firebaseMethods.fetchLastMessageBetween(
-          senderId: senderId, receiverId: receiverId);
+          senderId: senderId!, receiverId: receiverId!);
 
-  Stream<DocumentSnapshot> getUsersStream({@required String uid}) =>
-      _firebaseMethods.getUsersStream(uid: uid);
+  Stream<DocumentSnapshot> getUsersStream({@required String? uid}) =>
+      _firebaseMethods.getUsersStream(uid: uid!);
 
-  void setUserState({@required String userId, @required UserState userState}) =>
-      _firebaseMethods.setUserState(userId: userId, userState: userState);
+  void setUserState(
+          {@required String? userId, @required UserState? userState}) =>
+      _firebaseMethods.setUserState(userId: userId!, userState: userState!);
 }

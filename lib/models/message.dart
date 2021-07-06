@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class Message {
-  String senderId;
-  String receiverId;
-  String type;
-  String message;
-  Timestamp timeStamp;
-  String photoUrl;
+  String? senderId;
+  String? receiverId;
+  String? type;
+  String? message;
+  Timestamp? timeStamp;
+  String? photoUrl;
 
   Message(
       {this.senderId,

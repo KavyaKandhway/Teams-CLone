@@ -1,3 +1,4 @@
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter/services.dart';
@@ -5,7 +6,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:teams_clone/models/user.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
 import 'package:teams_clone/screens/PageView/widgets/share_dialog.dart';
-import 'package:teams_clone/utils/group_call_utilities.dart';
+import 'package:teams_clone/screens/callScreens/group_call_screen.dart';
+
 import 'package:teams_clone/utils/permission.dart';
 import 'package:flutter_share/flutter_share.dart';
 
@@ -18,7 +20,7 @@ class _CreateRoomDialogState extends State<CreateRoomDialog> {
   String roomId = "";
   FirebaseRepository _repository = FirebaseRepository();
 
-  UserClass sender;
+  UserClass? sender;
   @override
   void initState() {
     roomId = generateRandomString(8);
@@ -134,10 +136,14 @@ class _CreateRoomDialogState extends State<CreateRoomDialog> {
                   onPressed: () async {
                     await handleCameraAndMic(Permission.camera);
                     await handleCameraAndMic(Permission.microphone);
-                    GroupCallUtils.dial(
-                      context: context,
-                      from: sender,
-                      roomId: roomId,
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => GroupCallScreen(
+                          channelName: roomId,
+                          role: ClientRole.Broadcaster,
+                        ),
+                      ),
                     );
                   },
                   child: Container(

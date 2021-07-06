@@ -11,13 +11,14 @@ class LastMessageContainer extends StatelessWidget {
       stream: stream,
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData) {
-          var docList = snapshot.data.docs;
+          var docList = snapshot.data!.docs;
           if (docList.isNotEmpty) {
-            Message message = Message.fromMap(docList.last.data());
+            Message? message =
+                Message.fromMap(docList.last.data() as Map<String, dynamic>);
             return SizedBox(
               width: MediaQuery.of(context).size.width * 0.6,
               child: Text(
-                message.message,
+                message.message!,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(

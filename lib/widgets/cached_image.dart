@@ -2,15 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CachedImage extends StatelessWidget {
-  final String imageUrl;
-  final bool isRound;
-  final double radius;
-  final double height;
-  final double width;
+  final String? imageUrl;
+  final bool? isRound;
+  final double? radius;
+  final double? height;
+  final double? width;
 
-  final BoxFit fit;
+  final BoxFit? fit;
 
-  final String noImageAvailable =
+  final String? noImageAvailable =
       "https://th.bing.com/th/id/OIP.3GyNIN87R1zrwXN9SMLquAHaHa?pid=ImgDet&rs=1";
 
   CachedImage(
@@ -25,18 +25,18 @@ class CachedImage extends StatelessWidget {
   Widget build(BuildContext context) {
     try {
       return SizedBox(
-        height: isRound ? radius : height,
-        width: isRound ? radius : width,
+        height: isRound! ? radius : height,
+        width: isRound! ? radius : width,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(isRound ? 50 : radius),
+          borderRadius: BorderRadius.circular(isRound! ? 50 : radius!),
           child: CachedNetworkImage(
-            imageUrl: imageUrl,
+            imageUrl: imageUrl!,
             fit: fit,
             placeholder: (context, url) => Center(
               child: CircularProgressIndicator(),
             ),
             errorWidget: (context, url, error) => Image.network(
-              noImageAvailable,
+              noImageAvailable!,
               fit: BoxFit.cover,
             ),
           ),
@@ -45,7 +45,7 @@ class CachedImage extends StatelessWidget {
     } catch (e) {
       print(e);
       return Image.network(
-        noImageAvailable,
+        noImageAvailable!,
         fit: BoxFit.cover,
       );
     }

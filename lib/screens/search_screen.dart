@@ -13,7 +13,7 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   FirebaseRepository _repository = FirebaseRepository();
 
-  List<UserClass> userList;
+  List<UserClass>? userList;
   String query = "";
   TextEditingController searchController = TextEditingController();
 
@@ -87,12 +87,12 @@ class _SearchScreenState extends State<SearchScreen> {
   buildSuggestions(String query) {
     final List<UserClass> suggestionList = query.isEmpty
         ? []
-        : userList.where((UserClass user) {
-            String _getUsername = user.username.toLowerCase();
+        : userList!.where((UserClass user) {
+            String _getUsername = user.username!.toLowerCase();
             String _query = query.toLowerCase();
             String _getName = user.name != null
-                ? user.name.toLowerCase()
-                : user.email.split('@')[0].toLowerCase();
+                ? user.name!.toLowerCase()
+                : user.email!.split('@')[0].toLowerCase();
             bool matchesUserName = _getUsername.contains(_query);
             bool matchesName = _getName.contains(_query);
             return (matchesName || matchesUserName);
@@ -107,7 +107,7 @@ class _SearchScreenState extends State<SearchScreen> {
               : "https://irisvision.com/wp-content/uploads/2019/01/no-profile-1.png",
           name: suggestionList[index].name != null
               ? suggestionList[index].name
-              : suggestionList[index].email.split('@')[0],
+              : suggestionList[index].email!.split('@')[0],
           username: suggestionList[index].username,
         );
         return CustomTile(
@@ -120,16 +120,16 @@ class _SearchScreenState extends State<SearchScreen> {
                           ChatScreen(receiver: searchedUser)));
             },
             leading: CircleAvatar(
-              backgroundImage: NetworkImage(searchedUser.profilePhoto),
+              backgroundImage: NetworkImage(searchedUser.profilePhoto!),
               backgroundColor: Colors.indigo,
             ),
             title: Text(
-              searchedUser.username,
+              searchedUser.username!,
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.w400),
             ),
             subtitle: Text(
-              searchedUser.name,
+              searchedUser.name!,
               style: TextStyle(color: Colors.white),
             ));
       }),

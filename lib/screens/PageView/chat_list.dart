@@ -95,10 +95,10 @@ class ChatListContainer extends StatelessWidget {
               height: 400,
               child: StreamBuilder<QuerySnapshot>(
                 stream: _firebaseRepository.fetchContacts(
-                    userId: userProvider.getUSer.uid),
+                    userId: userProvider.getUSer!.uid!),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    var docList = snapshot.data.docs;
+                    var docList = snapshot.data!.docs;
 
                     if (docList.isEmpty) {
                       return QuietBox();
@@ -107,8 +107,8 @@ class ChatListContainer extends StatelessWidget {
                       padding: EdgeInsets.all(10),
                       itemCount: docList.length,
                       itemBuilder: (context, index) {
-                        Contact contact =
-                            Contact.fromMap(docList[index].data());
+                        Contact? contact = Contact.fromMap(
+                            docList[index].data() as Map<String, dynamic>);
                         return ContactView(
                           contact: contact,
                         );

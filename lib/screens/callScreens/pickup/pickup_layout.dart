@@ -7,7 +7,7 @@ import 'package:teams_clone/models/call.dart';
 import 'package:teams_clone/screens/callScreens/pickup/pickup_screen.dart';
 
 class PickupLayout extends StatelessWidget {
-  final Widget scaffold;
+  final Widget? scaffold;
   final CallMethods callMethods = CallMethods();
   PickupLayout({
     @required this.scaffold,
@@ -19,18 +19,19 @@ class PickupLayout extends StatelessWidget {
 
     return (userProvider != null && userProvider.getUSer != null)
         ? StreamBuilder<DocumentSnapshot>(
-            stream: callMethods.callStream(uid: userProvider.getUSer.uid),
+            stream: callMethods.callStream(uid: userProvider.getUSer!.uid),
             builder: (context, snapshot) {
-              if (snapshot.hasData && snapshot.data.data() != null) {
+              if (snapshot.hasData && snapshot.data!.data() != null) {
                 print("not null");
-                Call call = Call.fromMap(snapshot.data.data());
-                if (!call.hasDialed) {
+                Call call =
+                    Call.fromMap(snapshot.data!.data() as Map<String, dynamic>);
+                if (!call.hasDialed!) {
                   return PickupScreen(call: call);
                 } else {
-                  return scaffold;
+                  return scaffold!;
                 }
               }
-              return scaffold;
+              return scaffold!;
             },
           )
         : Scaffold(

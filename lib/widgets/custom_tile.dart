@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class CustomTile extends StatelessWidget {
-  final Widget leading;
-  final Widget title;
-  final Widget icon;
-  final Widget subtitle;
-  final Widget trailing;
-  final EdgeInsets margin;
-  final bool mini;
-  final GestureTapCallback onTap;
-  final GestureLongPressCallback onLongPress;
+  final Widget? leading;
+  final Widget? title;
+  final Widget? icon;
+  final Widget? subtitle;
+  final Widget? trailing;
+  final EdgeInsets? margin;
+  final bool? mini;
+  final GestureTapCallback? onTap;
+  final GestureLongPressCallback? onLongPress;
 
   CustomTile({
     @required this.leading,
@@ -28,15 +28,15 @@ class CustomTile extends StatelessWidget {
       onTap: onTap,
       onLongPress: onLongPress,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: mini ? 10 : 0),
+        padding: EdgeInsets.symmetric(horizontal: mini! ? 10 : 0),
         margin: margin,
         child: Row(
           children: [
-            leading,
+            leading!,
             Expanded(
               child: Container(
-                  margin: EdgeInsets.only(left: mini ? 10 : 15),
-                  padding: EdgeInsets.symmetric(vertical: mini ? 10 : 15),
+                  margin: EdgeInsets.only(left: mini! ? 10 : 15),
+                  padding: EdgeInsets.symmetric(vertical: mini! ? 10 : 15),
                   decoration: BoxDecoration(
                     border: Border(
                       bottom: BorderSide(width: 1, color: Colors.grey),
@@ -48,14 +48,14 @@ class CustomTile extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          title,
+                          title!,
                           SizedBox(
                             height: 5,
                           ),
                           Row(
                             children: [
                               icon ?? Container(),
-                              subtitle,
+                              subtitle!,
                             ],
                           )
                         ],

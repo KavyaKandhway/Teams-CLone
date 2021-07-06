@@ -17,24 +17,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
-  PageController pageController;
+  PageController? pageController;
   int _page = 0;
   FirebaseRepository _firebaseRepository = FirebaseRepository();
-  UserProvider userProvider;
+  UserProvider? userProvider;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
+    SchedulerBinding.instance!.addPostFrameCallback((_) async {
       userProvider = Provider.of<UserProvider>(context, listen: false);
-      await userProvider.refreshUser();
+      await userProvider!.refreshUser();
 
       _firebaseRepository.setUserState(
-          userId: userProvider.getUSer.uid, userState: UserState.Online);
+          userId: userProvider!.getUSer!.uid!, userState: UserState.Online);
     });
 
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
 
     pageController = PageController();
   }
@@ -43,14 +43,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    String currentUserId =
-        (userProvider != null && userProvider.getUSer != null)
-            ? userProvider.getUSer.uid
+    String? currentUserId =
+        (userProvider != null && userProvider!.getUSer != null)
+            ? userProvider!.getUSer!.uid
             : "";
     super.didChangeAppLifecycleState(state);
 
@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   }
 
   void navigationTapped(int page) {
-    pageController.jumpToPage(page);
+    pageController!.jumpToPage(page);
   }
 
   @override

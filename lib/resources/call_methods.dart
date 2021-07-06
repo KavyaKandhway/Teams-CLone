@@ -6,11 +6,11 @@ class CallMethods {
   final CollectionReference callCollection =
       FirebaseFirestore.instance.collection(CALL_COLLECTION);
 
-  Stream<DocumentSnapshot> callStream({String uid}) =>
+  Stream<DocumentSnapshot> callStream({String? uid}) =>
       callCollection.doc(uid).snapshots();
-  Future<bool> makeCall({Call call}) async {
+  Future<bool> makeCall({Call? call}) async {
     try {
-      call.hasDialed = true;
+      call!.hasDialed = true;
       Map<String, dynamic> hasDialedMap = call.toMap(call);
 
       call.hasDialed = false;
@@ -25,9 +25,9 @@ class CallMethods {
     }
   }
 
-  Future<bool> endCall({Call call}) async {
+  Future<bool> endCall({Call? call}) async {
     try {
-      await callCollection.doc(call.callerId).delete();
+      await callCollection.doc(call!.callerId).delete();
       await callCollection.doc(call.receiverId).delete();
       return true;
     } catch (e) {

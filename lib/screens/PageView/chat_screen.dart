@@ -22,7 +22,7 @@ import 'package:teams_clone/utils/permission.dart';
 import 'package:teams_clone/widgets/room_id.dart';
 
 class ChatScreen extends StatefulWidget {
-  final UserClass receiver;
+  final UserClass? receiver;
   ChatScreen({this.receiver});
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -31,17 +31,17 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   TextEditingController textieldController = TextEditingController();
   FirebaseRepository _repository = FirebaseRepository();
-  UserProvider userProvider;
-  ImageUploadProvider _imageUploadProvider;
-  UserClass sender;
-  String _currentUserId;
+  UserProvider? userProvider;
+  ImageUploadProvider? _imageUploadProvider;
+  UserClass? sender;
+  String? _currentUserId;
   bool isWriting = false;
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) {
+    SchedulerBinding.instance!.addPostFrameCallback((_) {
       userProvider = Provider.of<UserProvider>(context, listen: false);
-      userProvider.refreshUser();
+      userProvider!.refreshUser();
     });
 
     _repository.getCurentUser().then((user) {
@@ -51,7 +51,7 @@ class _ChatScreenState extends State<ChatScreen> {
           uid: user.uid,
           name: user.displayName != null
               ? user.displayName
-              : user.email.split('@')[0],
+              : user.email!.split('@')[0],
           profilePhoto: user.photoURL != null
               ? user.photoURL
               : "https://irisvision.com/wp-content/uploads/2019/01/no-profile-1.png",
@@ -70,7 +70,7 @@ class _ChatScreenState extends State<ChatScreen> {
         body: Column(
           children: [
             Flexible(child: messageList()),
-            _imageUploadProvider.getViewState == ViewState.LOADING
+            _imageUploadProvider!.getViewState == ViewState.LOADING
                 ? Container(
                     alignment: Alignment.centerRight,
                     margin: EdgeInsets.only(right: 15),
@@ -88,7 +88,7 @@ class _ChatScreenState extends State<ChatScreen> {
       stream: FirebaseFirestore.instance
           .collection(MESSAGES_COLLECTION)
           .doc(_currentUserId)
-          .collection(widget.receiver.uid)
+          .collection(widget.receiver!.uid!)
           .orderBy(TIMESTAMP_FIELD, descending: true)
           .snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -99,18 +99,19 @@ class _ChatScreenState extends State<ChatScreen> {
         }
         return ListView.builder(
           padding: EdgeInsets.all(10),
-          itemCount: snapshot.data.docs.length,
+          itemCount: snapshot.data!.docs.length,
           reverse: true,
           itemBuilder: (context, index) {
-            return chatMessageItem(snapshot.data.docs[index]);
+            return chatMessageItem(snapshot.data!.docs[index]);
           },
         );
       },
     );
   }
 
-  Widget chatMessageItem(DocumentSnapshot snapshot) {
-    Message _message = Message.fromMap(snapshot.data());
+  Widget chatMessageItem(DocumentSnapshot? snapshot) {
+    Message? _message =
+        Message.fromMap(snapshot!.data() as Map<String, dynamic>);
     return Container(
       margin: EdgeInsets.symmetric(vertical: 15),
       child: Container(
@@ -159,9 +160,9 @@ class _ChatScreenState extends State<ChatScreen> {
           radius: 10,
         );
       } else if (message.type == MESSAGE_TYPE_CALL) {
-        if (message.message.split('-')[1].isNotEmpty) {
+        if (message.message!.split('-')[1].isNotEmpty) {
           return RoomID(
-            roomId: message.message.split('-')[1],
+            roomId: message.message!.split('-')[1],
           );
         } else {
           return Text("ID is null");
@@ -170,16 +171,16 @@ class _ChatScreenState extends State<ChatScreen> {
         return Text("Url was null");
       }
     } else if (message.type == MESSAGE_TYPE_CALL) {
-      if (message.message.split('-')[1].isNotEmpty) {
+      if (message.message!.split('-')[1].isNotEmpty) {
         return RoomID(
-          roomId: message.message.split('-')[1],
+          roomId: message.message!.split('-')[1],
         );
       } else {
         return Text("ID is null");
       }
     } else {
       return Text(
-        message.message,
+        message.message!,
         style: TextStyle(
           color: Colors.white,
           fontSize: 16.0,
@@ -233,6 +234,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         onPressed: () {
                           Navigator.maybePop(context);
                         },
+                        child: Container(),
                       ),
                       Expanded(
                         child: Align(
@@ -390,8 +392,8 @@ class _ChatScreenState extends State<ChatScreen> {
     var text = textieldController.text;
 
     Message _message = Message(
-      receiverId: widget.receiver.uid,
-      senderId: sender.uid,
+      receiverId: widget.receiver!.uid,
+      senderId: sender!.uid,
       message: text,
       timeStamp: Timestamp.now(),
       type: MESSAGE_TYPE_TEXT,
@@ -400,16 +402,16 @@ class _ChatScreenState extends State<ChatScreen> {
       isWriting = false;
       textieldController.text = "";
     });
-    _repository.addMessageToDb(_message, sender, widget.receiver);
+    _repository.addMessageToDb(_message, sender!, widget.receiver!);
   }
 
-  pickImage({@required ImageSource source}) async {
+  pickImage({@required ImageSource? source}) async {
     File selectedImage = await Utils.pickImage(source: source);
     _repository.uploadImage(
         image: selectedImage,
-        receiverId: widget.receiver.uid,
-        senderId: _currentUserId,
-        imageUploadProvider: _imageUploadProvider);
+        receiverId: widget.receiver!.uid!,
+        senderId: _currentUserId!,
+        imageUploadProvider: _imageUploadProvider!);
   }
 
   CustomAppBar customAppBar(context) {
@@ -424,14 +426,14 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           CircleAvatar(
             backgroundColor: Colors.indigo,
-            backgroundImage: NetworkImage(widget.receiver.profilePhoto),
+            backgroundImage: NetworkImage(widget.receiver!.profilePhoto!),
           ),
           SizedBox(
             width: 10,
           ),
-          Text(widget.receiver.name.length > 10
-              ? widget.receiver.name.substring(0, 10) + "..."
-              : widget.receiver.name),
+          Text(widget.receiver!.name!.length > 10
+              ? widget.receiver!.name!.substring(0, 7) + ".."
+              : widget.receiver!.name!),
         ],
       ),
       actions: [
@@ -454,10 +456,10 @@ class _ChatScreenState extends State<ChatScreen> {
 }
 
 class ModalTile extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final IconData icon;
-  final Function onTap;
+  final String? title;
+  final String? subtitle;
+  final IconData? icon;
+  final VoidCallback? onTap;
   const ModalTile({
     @required this.title,
     @required this.icon,
@@ -485,14 +487,14 @@ class ModalTile extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          subtitle,
+          subtitle!,
           style: TextStyle(
             color: Colors.grey,
             fontSize: 14,
           ),
         ),
         title: Text(
-          title,
+          title!,
           style: TextStyle(
             fontSize: 18,
             color: Colors.white,

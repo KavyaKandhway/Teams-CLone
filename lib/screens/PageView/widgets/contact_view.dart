@@ -12,17 +12,17 @@ import 'package:teams_clone/widgets/cached_image.dart';
 import 'package:teams_clone/widgets/custom_tile.dart';
 
 class ContactView extends StatelessWidget {
-  final Contact contact;
+  final Contact? contact;
   final FirebaseRepository _firebaseRepository = FirebaseRepository();
   ContactView({this.contact});
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<UserClass>(
-      future: _firebaseRepository.getUserDetailsById(contact.uid),
+      future: _firebaseRepository.getUserDetailsById(contact!.uid),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          UserClass user = snapshot.data;
-          return ViewLayout(contact: user);
+          UserClass? user = snapshot.data;
+          return ViewLayout(contact: user!);
         }
         return Center(
           child: CircularProgressIndicator(),
@@ -33,7 +33,7 @@ class ContactView extends StatelessWidget {
 }
 
 class ViewLayout extends StatelessWidget {
-  final UserClass contact;
+  final UserClass? contact;
   final FirebaseRepository _firebaseRepository = FirebaseRepository();
   ViewLayout({@required this.contact});
   @override
@@ -42,7 +42,7 @@ class ViewLayout extends StatelessWidget {
     return CustomTile(
       subtitle: LastMessageContainer(
         stream: _firebaseRepository.fetchLastMessageBetween(
-            senderId: userProvider.getUSer.uid, receiverId: contact.uid),
+            senderId: userProvider.getUSer!.uid!, receiverId: contact!.uid!),
       ),
       mini: false,
       onTap: () {
@@ -54,7 +54,7 @@ class ViewLayout extends StatelessWidget {
                     )));
       },
       title: Text(
-        contact.name != null ? contact.name : contact.email.split('@')[0],
+        contact!.name != null ? contact!.name! : contact!.email!.split('@')[0],
         style: TextStyle(
           color: Colors.white,
           fontSize: 14,
@@ -68,13 +68,13 @@ class ViewLayout extends StatelessWidget {
         child: Stack(
           children: [
             CachedImage(
-              contact.profilePhoto != null
-                  ? contact.profilePhoto
+              contact!.profilePhoto != null
+                  ? contact!.profilePhoto
                   : "https://irisvision.com/wp-content/uploads/2019/01/no-profile-1.png",
               radius: 80,
               isRound: true,
             ),
-            OnlineDotIndicator(uid: contact.uid),
+            OnlineDotIndicator(uid: contact!.uid),
           ],
         ),
       ),

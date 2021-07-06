@@ -24,10 +24,10 @@ class Utils {
     return firstNameInitial + lastNameInitial;
   }
 
-  static Future<File> pickImage({@required ImageSource source}) async {
-    final ImagePicker _picker = ImagePicker();
-    PickedFile pickedImage = await _picker.getImage(source: source);
-    File selectedImage = File(pickedImage.path);
+  static Future<File> pickImage({@required ImageSource? source}) async {
+    final ImagePicker? _picker = ImagePicker();
+    PickedFile? pickedImage = await _picker!.getImage(source: source!);
+    File? selectedImage = File(pickedImage!.path);
     return await compressImage(selectedImage);
   }
 
@@ -37,8 +37,8 @@ class Utils {
     final path = tempDir.path;
 
     int random = Random().nextInt(1000);
-    Im.Image image = Im.decodeImage(imageToCompress.readAsBytesSync());
-    Im.copyResize(image, width: 500, height: 500);
+    Im.Image? image = Im.decodeImage(imageToCompress.readAsBytesSync());
+    Im.copyResize(image!, width: 500, height: 500);
     return new File('$path/img_$random.jpg')
       ..writeAsBytesSync(Im.encodeJpg(image, quality: 85));
   }

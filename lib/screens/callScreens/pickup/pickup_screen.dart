@@ -6,7 +6,7 @@ import 'package:teams_clone/screens/callScreens/call_screen.dart';
 import 'package:teams_clone/widgets/cached_image.dart';
 
 class PickupScreen extends StatelessWidget {
-  final Call call;
+  final Call? call;
   final CallMethods callMethods = CallMethods();
   PickupScreen({
     @required this.call,
@@ -30,7 +30,7 @@ class PickupScreen extends StatelessWidget {
               height: 50,
             ),
             CachedImage(
-              call.callerPic,
+              call!.callerPic,
               isRound: true,
               radius: 180,
             ),
@@ -38,7 +38,7 @@ class PickupScreen extends StatelessWidget {
               height: 15,
             ),
             Text(
-              call.callerName,
+              call!.callerName!,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -54,7 +54,7 @@ class PickupScreen extends StatelessWidget {
                     icon: Icon(Icons.call_end),
                     color: Colors.redAccent,
                     onPressed: () async {
-                      await callMethods.endCall(call: call);
+                      await callMethods.endCall(call: call!);
                     }),
                 SizedBox(
                   width: 25,

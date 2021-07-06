@@ -13,8 +13,8 @@ import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 
 class CallScreen extends StatefulWidget {
-  final Call call;
-  final ClientRole role;
+  final Call? call;
+  final ClientRole? role;
 
   CallScreen({
     @required this.call,
@@ -27,13 +27,13 @@ class CallScreen extends StatefulWidget {
 class _CallScreenState extends State<CallScreen> {
   final CallMethods callMethods = CallMethods();
 
-  UserProvider userProvider;
-  StreamSubscription callStreamSubscrption;
+  UserProvider? userProvider;
+  StreamSubscription? callStreamSubscrption;
 
   final _users = <int>[];
   final _infoStrings = <String>[];
   bool muted = false;
-  RtcEngine _engine;
+  late RtcEngine _engine;
 
   @override
   void initState() {
@@ -53,7 +53,7 @@ class _CallScreenState extends State<CallScreen> {
     _engine.leaveChannel();
     _engine.destroy();
 
-    callStreamSubscrption.cancel();
+    callStreamSubscrption!.cancel();
     super.dispose();
   }
 
@@ -87,7 +87,7 @@ class _CallScreenState extends State<CallScreen> {
         _users.add(uid);
       });
     }, userOffline: (uid, elapsed) {
-      callMethods.endCall(call: widget.call);
+      callMethods.endCall(call: widget.call!);
       setState(() {
         final info = 'userOffline: $uid';
         _infoStrings.add(info);
@@ -114,15 +114,15 @@ class _CallScreenState extends State<CallScreen> {
 
     await _initAgoraRtcEngine();
     _addAgoraEventHandlers();
-    await _engine.joinChannel(null, widget.call.channelId, null, 0);
+    await _engine.joinChannel(null, widget.call!.channelId!, null, 0);
   }
 
   addPostFrameCallBack() {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
+    SchedulerBinding.instance!.addPostFrameCallback((_) {
       userProvider = Provider.of<UserProvider>(context, listen: false);
 
       callStreamSubscrption = callMethods
-          .callStream(uid: userProvider.getUSer.uid)
+          .callStream(uid: userProvider!.getUSer!.uid)
           .listen((DocumentSnapshot ds) {
         //defining the logic
         switch (ds.data()) {
@@ -228,7 +228,7 @@ class _CallScreenState extends State<CallScreen> {
             itemCount: _infoStrings.length,
             itemBuilder: (BuildContext context, int index) {
               if (_infoStrings.isEmpty) {
-                return null;
+                return Container();
               }
               return Padding(
                 padding: const EdgeInsets.symmetric(
@@ -286,7 +286,7 @@ class _CallScreenState extends State<CallScreen> {
             padding: const EdgeInsets.all(12.0),
           ),
           RawMaterialButton(
-            onPressed: () => callMethods.endCall(call: widget.call),
+            onPressed: () => callMethods.endCall(call: widget.call!),
             child: Icon(
               Icons.call_end,
               color: Colors.white,

@@ -1,68 +1,75 @@
 import 'dart:async';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:provider/provider.dart';
-import 'package:teams_clone/configs/agora_configs.dart';
-import 'package:teams_clone/models/group_call.dart';
-import 'package:teams_clone/provider/user_provider.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
-import 'package:teams_clone/resources/group_call_methods.dart';
+import 'package:flutter/material.dart';
+import 'package:teams_clone/configs/agora_configs.dart';
 
 class GroupCallScreen extends StatefulWidget {
-  final GroupCall groupCall;
-  final ClientRole role;
-  final String roomId;
+  /// non-modifiable channel name of the page
+  final String? channelName;
 
-  GroupCallScreen({
-    @required this.groupCall,
-    @required this.roomId,
-    this.role,
-  });
+  /// non-modifiable client role of the page
+  final ClientRole? role;
+
+  /// Creates a call page with given channel name.
+  const GroupCallScreen({Key? key, this.channelName, this.role})
+      : super(key: key);
+
   @override
   _GroupCallScreenState createState() => _GroupCallScreenState();
 }
 
 class _GroupCallScreenState extends State<GroupCallScreen> {
-  final GroupCallMethods groupCallMethods = GroupCallMethods();
-
-  UserProvider userProvider;
-  StreamSubscription callStreamSubscrption;
-
   final _users = <int>[];
   final _infoStrings = <String>[];
   bool muted = false;
-  RtcEngine _engine;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    addPostFrameCallBack();
-    initializeAgora();
-  }
+  late RtcEngine _engine;
 
   @override
   void dispose() {
-    // TODO: implement dispose
-
     // clear users
     _users.clear();
     // destroy sdk
     _engine.leaveChannel();
     _engine.destroy();
-
-    callStreamSubscrption.cancel();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // initialize agora sdk
+    initialize();
+  }
+
+  Future<void> initialize() async {
+    if (APP_ID.isEmpty) {
+      setState(() {
+        _infoStrings.add(
+          'APP_ID missing, please provide your APP_ID in settings.dart',
+        );
+        _infoStrings.add('Agora Engine is not starting');
+      });
+      return;
+    }
+
+    await _initAgoraRtcEngine();
+    _addAgoraEventHandlers();
+    await _engine.enableWebSdkInteroperability(true);
+    VideoEncoderConfiguration configuration = VideoEncoderConfiguration();
+    configuration.dimensions = VideoDimensions(1920, 1080);
+    await _engine.setVideoEncoderConfiguration(configuration);
+    await _engine.joinChannel(null, widget.channelName!, null, 0);
   }
 
   /// Create agora sdk instance and initialize
   Future<void> _initAgoraRtcEngine() async {
     _engine = await RtcEngine.create(APP_ID);
     await _engine.enableVideo();
+    await _engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
+    await _engine.setClientRole(widget.role!);
   }
 
   /// Add agora event handlers
@@ -100,56 +107,6 @@ class _GroupCallScreenState extends State<GroupCallScreen> {
         _infoStrings.add(info);
       });
     }));
-  }
-
-  Future<void> initializeAgora() async {
-    if (APP_ID.isEmpty) {
-      setState(() {
-        _infoStrings.add(
-          'APP_ID missing, please provide your APP_ID in settings.dart',
-        );
-        _infoStrings.add('Agora Engine is not starting');
-      });
-      return;
-    }
-
-    await _initAgoraRtcEngine();
-    _addAgoraEventHandlers();
-    await _engine.joinChannel(null, widget.groupCall.roomId, null, 0);
-  }
-
-  addPostFrameCallBack() {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      userProvider = Provider.of<UserProvider>(context, listen: false);
-
-      callStreamSubscrption = groupCallMethods
-          .callStream(uid: userProvider.getUSer.uid)
-          .listen((DocumentSnapshot ds) {
-        //defining the logic
-        switch (ds.data()) {
-          case null:
-            Navigator.pop(context);
-            break;
-          default:
-            break;
-        }
-      });
-    });
-  }
-
-  void _onToggleMute() {
-    setState(() {
-      muted = !muted;
-    });
-    _engine.muteLocalAudioStream(muted);
-  }
-
-  void _onCallEnd(BuildContext context) {
-    Navigator.pop(context);
-  }
-
-  void _onSwitchCamera() {
-    _engine.switchCamera();
   }
 
   /// Helper function to get list of native views
@@ -215,56 +172,6 @@ class _GroupCallScreenState extends State<GroupCallScreen> {
     return Container();
   }
 
-  /// Info panel to show logs
-  Widget _panel() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 48),
-      alignment: Alignment.bottomCenter,
-      child: FractionallySizedBox(
-        heightFactor: 0.5,
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 48),
-          child: ListView.builder(
-            reverse: true,
-            itemCount: _infoStrings.length,
-            itemBuilder: (BuildContext context, int index) {
-              if (_infoStrings.isEmpty) {
-                return null;
-              }
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 3,
-                  horizontal: 10,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 2,
-                          horizontal: 5,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.yellowAccent,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Text(
-                          _infoStrings[index],
-                          style: TextStyle(color: Colors.blueGrey),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
   /// Toolbar layout
   Widget _toolbar() {
     if (widget.role == ClientRole.Audience) return Container();
@@ -315,12 +222,77 @@ class _GroupCallScreenState extends State<GroupCallScreen> {
     );
   }
 
+  /// Info panel to show logs
+  Widget _panel() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 48),
+      alignment: Alignment.bottomCenter,
+      child: FractionallySizedBox(
+        heightFactor: 0.5,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 48),
+          child: ListView.builder(
+            reverse: true,
+            itemCount: _infoStrings.length,
+            itemBuilder: (BuildContext context, int index) {
+              if (_infoStrings.isEmpty) {
+                return Text(
+                    "null"); // return type can't be null, a widget was required
+              }
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 3,
+                  horizontal: 10,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 2,
+                          horizontal: 5,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.yellowAccent,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Text(
+                          _infoStrings[index],
+                          style: TextStyle(color: Colors.blueGrey),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _onCallEnd(BuildContext context) {
+    Navigator.pop(context);
+  }
+
+  void _onToggleMute() {
+    setState(() {
+      muted = !muted;
+    });
+    _engine.muteLocalAudioStream(muted);
+  }
+
+  void _onSwitchCamera() {
+    _engine.switchCamera();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Room ID:  " + widget.roomId),
-        backgroundColor: Colors.grey.shade900,
+        title: Text('Room ID-' + widget.channelName!),
       ),
       backgroundColor: Colors.black,
       body: Center(

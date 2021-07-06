@@ -1,5 +1,5 @@
 class GroupCall {
-  String roomId;
+  String? roomId;
 
   GroupCall({
     this.roomId,

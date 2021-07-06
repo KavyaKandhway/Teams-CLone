@@ -1,8 +1,10 @@
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:teams_clone/models/user.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
-import 'package:teams_clone/utils/group_call_utilities.dart';
+import 'package:teams_clone/screens/callScreens/group_call_screen.dart';
+
 import 'package:teams_clone/utils/permission.dart';
 
 class JoinRoomDialog extends StatefulWidget {
@@ -12,7 +14,7 @@ class JoinRoomDialog extends StatefulWidget {
 
 class _JoinRoomDialogState extends State<JoinRoomDialog> {
   final TextEditingController roomTxtController = TextEditingController();
-  UserClass sender;
+  UserClass? sender;
   FirebaseRepository _repository = FirebaseRepository();
 
   @override
@@ -78,10 +80,14 @@ class _JoinRoomDialogState extends State<JoinRoomDialog> {
                     onPressed: () async {
                       await handleCameraAndMic(Permission.camera);
                       await handleCameraAndMic(Permission.microphone);
-                      GroupCallUtils.dial(
-                        context: context,
-                        from: sender,
-                        roomId: roomTxtController.text,
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => GroupCallScreen(
+                            channelName: roomTxtController.text,
+                            role: ClientRole.Broadcaster,
+                          ),
+                        ),
                       );
                     },
                     child: Container(

@@ -8,7 +8,7 @@ import 'package:teams_clone/resources/firebase_repository.dart';
 import 'package:teams_clone/screens/PageView/widgets/contact_share_view.dart';
 
 class ShareDialog extends StatefulWidget {
-  final String roomId;
+  final String? roomId;
   ShareDialog({this.roomId});
   @override
   _ShareDialogState createState() => _ShareDialogState(
@@ -17,7 +17,7 @@ class ShareDialog extends StatefulWidget {
 }
 
 class _ShareDialogState extends State<ShareDialog> {
-  String roomId;
+  String? roomId;
   _ShareDialogState({this.roomId});
   final FirebaseRepository _firebaseRepository = FirebaseRepository();
   @override
@@ -32,10 +32,10 @@ class _ShareDialogState extends State<ShareDialog> {
         children: [
           StreamBuilder<QuerySnapshot>(
             stream: _firebaseRepository.fetchContacts(
-                userId: userProvider.getUSer.uid),
+                userId: userProvider.getUSer!.uid!),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                var docList = snapshot.data.docs;
+                var docList = snapshot.data!.docs;
 
                 if (docList.isEmpty) {
                   return Container();
@@ -46,7 +46,8 @@ class _ShareDialogState extends State<ShareDialog> {
                   padding: EdgeInsets.all(10),
                   itemCount: docList.length,
                   itemBuilder: (context, index) {
-                    Contact contact = Contact.fromMap(docList[index].data());
+                    Contact? contact = Contact.fromMap(
+                        docList[index].data() as Map<String, dynamic>);
 
                     return ContactShareView(
                       roomId: roomId,
@@ -77,7 +78,7 @@ class _ShareDialogState extends State<ShareDialog> {
                     title: 'Invitation for group video call',
                     text: 'Hey there,\nEnter room ID to join the call.\n' +
                         'ID- *' +
-                        roomId +
+                        roomId! +
                         '*',
                   );
                 },

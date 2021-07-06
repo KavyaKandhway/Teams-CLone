@@ -59,13 +59,13 @@ class UserDetailsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
-    final UserClass user = userProvider.getUSer;
+    final UserClass? user = userProvider.getUSer;
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       child: Row(
         children: [
           CachedImage(
-            user.profilePhoto != null
+            user!.profilePhoto != null
                 ? user.profilePhoto
                 : "https://irisvision.com/wp-content/uploads/2019/01/no-profile-1.png",
             isRound: true,
@@ -78,7 +78,7 @@ class UserDetailsBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                user.name != null ? user.name : user.email.split('@')[0],
+                user.name != null ? user.name! : user.email!.split('@')[0],
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -87,7 +87,7 @@ class UserDetailsBody extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Text(
-                user.email,
+                user.email!,
                 style: TextStyle(fontSize: 14, color: Colors.white),
               ),
             ],

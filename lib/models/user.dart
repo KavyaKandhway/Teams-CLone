@@ -1,11 +1,11 @@
 class UserClass {
-  String uid;
-  String name;
-  String email;
-  String username;
-  String status;
-  int state;
-  String profilePhoto;
+  String? uid;
+  String? name;
+  String? email;
+  String? username;
+  String? status;
+  int? state;
+  String? profilePhoto;
   UserClass({
     this.uid,
     this.name,

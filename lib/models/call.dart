@@ -1,12 +1,12 @@
 class Call {
-  String callerId;
-  String callerName;
-  String callerPic;
-  String receiverId;
-  String receiverName;
-  String receiverPic;
-  String channelId;
-  bool hasDialed;
+  String? callerId;
+  String? callerName;
+  String? callerPic;
+  String? receiverId;
+  String? receiverName;
+  String? receiverPic;
+  String? channelId;
+  bool? hasDialed;
 
   Call({
     this.callerId,
@@ -19,9 +19,9 @@ class Call {
     this.hasDialed,
   });
 
-  Map<String, dynamic> toMap(Call call) {
-    Map<String, dynamic> callMap = Map();
-    callMap["caller_id"] = call.callerId;
+  Map<String, dynamic> toMap(Call? call) {
+    Map<String, dynamic>? callMap = Map();
+    callMap["caller_id"] = call!.callerId;
     callMap["caller_name"] = call.callerName;
     callMap["caller_pic"] = call.callerPic;
     callMap["receiver_id"] = call.receiverId;
@@ -32,8 +32,8 @@ class Call {
     return callMap;
   }
 
-  Call.fromMap(Map callMap) {
-    this.callerId = callMap["caller_id"];
+  Call.fromMap(Map? callMap) {
+    this.callerId = callMap!["caller_id"];
     this.callerName = callMap["caller_name"];
     this.callerPic = callMap["caller_pic"];
     this.receiverId = callMap["receiver_id"];

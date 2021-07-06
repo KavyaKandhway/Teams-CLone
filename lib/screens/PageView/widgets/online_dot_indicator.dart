@@ -6,7 +6,7 @@ import 'package:teams_clone/resources/firebase_repository.dart';
 import 'package:teams_clone/utils/utilities.dart';
 
 class OnlineDotIndicator extends StatelessWidget {
-  final String uid;
+  final String? uid;
   final FirebaseRepository _firebaseRepository = FirebaseRepository();
   OnlineDotIndicator({@required this.uid});
   @override
@@ -24,12 +24,13 @@ class OnlineDotIndicator extends StatelessWidget {
 
     return StreamBuilder<DocumentSnapshot>(
       stream: _firebaseRepository.getUsersStream(
-        uid: uid,
+        uid: uid!,
       ),
       builder: (context, snapshot) {
-        UserClass user;
-        if (snapshot.hasData && snapshot.data.data() != null) {
-          user = UserClass.fromMap(snapshot.data.data());
+        UserClass? user;
+        if (snapshot.hasData && snapshot.data!.data() != null) {
+          user =
+              UserClass.fromMap(snapshot.data!.data() as Map<String, dynamic>);
         }
         return Container(
           height: 10,
@@ -37,7 +38,7 @@ class OnlineDotIndicator extends StatelessWidget {
           margin: EdgeInsets.only(right: 8, top: 8),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: getColor(user?.state),
+            color: getColor(user!.state!),
           ),
         );
       },
