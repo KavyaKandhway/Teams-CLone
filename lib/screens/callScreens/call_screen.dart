@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +33,8 @@ class _CallScreenState extends State<CallScreen> {
 
   final _users = <int>[];
   final _infoStrings = <String>[];
-  bool muted = false;
+  bool audioMuted = false;
+  bool videoMuted = false;
   late RtcEngine _engine;
 
   @override
@@ -136,11 +138,11 @@ class _CallScreenState extends State<CallScreen> {
     });
   }
 
-  void _onToggleMute() {
+  void _onToggleMuteAudio() {
     setState(() {
-      muted = !muted;
+      audioMuted = !audioMuted;
     });
-    _engine.muteLocalAudioStream(muted);
+    _engine.muteLocalAudioStream(audioMuted);
   }
 
   void _onCallEnd(BuildContext context) {
@@ -149,6 +151,13 @@ class _CallScreenState extends State<CallScreen> {
 
   void _onSwitchCamera() {
     _engine.switchCamera();
+  }
+
+  void _onToggleMuteVideo() {
+    setState(() {
+      videoMuted = !videoMuted;
+    });
+    _engine.muteLocalVideoStream(videoMuted);
   }
 
   /// Helper function to get list of native views
@@ -264,52 +273,57 @@ class _CallScreenState extends State<CallScreen> {
     );
   }
 
-  /// Toolbar layout
   Widget _toolbar() {
     if (widget.role == ClientRole.Audience) return Container();
     return Container(
       alignment: Alignment.bottomCenter,
-      padding: const EdgeInsets.symmetric(vertical: 48),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          RawMaterialButton(
-            onPressed: _onToggleMute,
-            child: Icon(
-              muted ? Icons.mic_off : Icons.mic,
-              color: muted ? Colors.white : Colors.blueAccent,
-              size: 20.0,
+      child: Container(
+        height: 60,
+        child: ConvexAppBar(
+          style: TabStyle.fixedCircle,
+          backgroundColor: Colors.indigo,
+          color: Colors.white,
+          items: [
+            TabItem(
+              icon: Icons.switch_camera_outlined,
             ),
-            shape: CircleBorder(),
-            elevation: 2.0,
-            fillColor: muted ? Colors.blueAccent : Colors.white,
-            padding: const EdgeInsets.all(12.0),
-          ),
-          RawMaterialButton(
-            onPressed: () => callMethods.endCall(call: widget.call!),
-            child: Icon(
-              Icons.call_end,
-              color: Colors.white,
-              size: 35.0,
+            TabItem(
+              icon: videoMuted
+                  ? Icons.videocam_off_outlined
+                  : Icons.videocam_outlined,
             ),
-            shape: CircleBorder(),
-            elevation: 2.0,
-            fillColor: Colors.redAccent,
-            padding: const EdgeInsets.all(15.0),
-          ),
-          RawMaterialButton(
-            onPressed: _onSwitchCamera,
-            child: Icon(
-              Icons.switch_camera,
-              color: Colors.blueAccent,
-              size: 20.0,
+            TabItem(
+              icon: Icons.call_end_rounded,
             ),
-            shape: CircleBorder(),
-            elevation: 2.0,
-            fillColor: Colors.white,
-            padding: const EdgeInsets.all(12.0),
-          )
-        ],
+            TabItem(
+              icon: audioMuted ? Icons.mic_off_outlined : Icons.mic_none,
+            ),
+            TabItem(
+              icon: Icons.chat_outlined,
+            ),
+          ],
+          initialActiveIndex: 2, //optional, default as 0
+          onTap: (int i) {
+            switch (i) {
+              case 0:
+                _onSwitchCamera();
+                break;
+              case 1:
+                _onToggleMuteVideo();
+                break;
+
+              case 2:
+                callMethods.endCall(call: widget.call!);
+                break;
+
+              case 3:
+                _onToggleMuteAudio();
+                break;
+              case 2:
+                break;
+            }
+          },
+        ),
       ),
     );
   }
@@ -322,7 +336,7 @@ class _CallScreenState extends State<CallScreen> {
         child: Stack(
           children: <Widget>[
             _viewRows(),
-            _panel(),
+            // _panel(),
             _toolbar(),
           ],
         ),
