@@ -3,8 +3,11 @@ import 'dart:async';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:teams_clone/configs/agora_configs.dart';
+import 'package:teams_clone/screens/PageView/widgets/share_dialog.dart';
+import 'package:teams_clone/widgets/app_bart.dart';
 
 class GroupCallScreen extends StatefulWidget {
   /// non-modifiable channel name of the page
@@ -24,7 +27,8 @@ class GroupCallScreen extends StatefulWidget {
 class _GroupCallScreenState extends State<GroupCallScreen> {
   final _users = <int>[];
   final _infoStrings = <String>[];
-  bool muted = false;
+  bool audioMuted = false;
+  bool videoMuted = false;
   late RtcEngine _engine;
 
   @override
@@ -177,47 +181,54 @@ class _GroupCallScreenState extends State<GroupCallScreen> {
     if (widget.role == ClientRole.Audience) return Container();
     return Container(
       alignment: Alignment.bottomCenter,
-      padding: const EdgeInsets.symmetric(vertical: 48),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          RawMaterialButton(
-            onPressed: _onToggleMute,
-            child: Icon(
-              muted ? Icons.mic_off : Icons.mic,
-              color: muted ? Colors.white : Colors.blueAccent,
-              size: 20.0,
+      child: Container(
+        height: 60,
+        child: ConvexAppBar(
+          style: TabStyle.fixedCircle,
+          backgroundColor: Colors.indigo,
+          color: Colors.white,
+          items: [
+            TabItem(
+              icon: Icons.switch_camera_outlined,
             ),
-            shape: CircleBorder(),
-            elevation: 2.0,
-            fillColor: muted ? Colors.blueAccent : Colors.white,
-            padding: const EdgeInsets.all(12.0),
-          ),
-          RawMaterialButton(
-            onPressed: () => _onCallEnd(context),
-            child: Icon(
-              Icons.call_end,
-              color: Colors.white,
-              size: 35.0,
+            TabItem(
+              icon: videoMuted
+                  ? Icons.videocam_off_outlined
+                  : Icons.videocam_outlined,
             ),
-            shape: CircleBorder(),
-            elevation: 2.0,
-            fillColor: Colors.redAccent,
-            padding: const EdgeInsets.all(15.0),
-          ),
-          RawMaterialButton(
-            onPressed: _onSwitchCamera,
-            child: Icon(
-              Icons.switch_camera,
-              color: Colors.blueAccent,
-              size: 20.0,
+            TabItem(
+              icon: Icons.call_end_rounded,
             ),
-            shape: CircleBorder(),
-            elevation: 2.0,
-            fillColor: Colors.white,
-            padding: const EdgeInsets.all(12.0),
-          )
-        ],
+            TabItem(
+              icon: audioMuted ? Icons.mic_off_outlined : Icons.mic_none,
+            ),
+            TabItem(
+              icon: Icons.chat_outlined,
+            ),
+          ],
+          initialActiveIndex: 2, //optional, default as 0
+          onTap: (int i) {
+            switch (i) {
+              case 0:
+                _onSwitchCamera();
+                break;
+              case 1:
+                _onToggleMuteVideo();
+                break;
+
+              case 2:
+                _onCallEnd(context);
+                break;
+
+              case 3:
+                _onToggleMuteAudio();
+                break;
+              case 2:
+                print("chat");
+                break;
+            }
+          },
+        ),
       ),
     );
   }
@@ -277,11 +288,18 @@ class _GroupCallScreenState extends State<GroupCallScreen> {
     Navigator.pop(context);
   }
 
-  void _onToggleMute() {
+  void _onToggleMuteAudio() {
     setState(() {
-      muted = !muted;
+      audioMuted = !audioMuted;
     });
-    _engine.muteLocalAudioStream(muted);
+    _engine.muteLocalAudioStream(audioMuted);
+  }
+
+  void _onToggleMuteVideo() {
+    setState(() {
+      videoMuted = !videoMuted;
+    });
+    _engine.muteLocalVideoStream(videoMuted);
   }
 
   void _onSwitchCamera() {
@@ -291,15 +309,44 @@ class _GroupCallScreenState extends State<GroupCallScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Room ID-' + widget.channelName!),
+      appBar: CustomAppBar(
+        title: Text('Meeting'),
+        leading: Icon(Icons.videocam_outlined),
+        actions: [
+          TextButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (_) {
+                      return ShareDialog(
+                          roomId: widget.channelName); //CreateRoomDialog
+                    });
+              },
+              child: Container(
+                height: 40,
+                width: 60,
+                child: Center(
+                  child: Text(
+                    "Invite",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.indigo,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              )),
+        ],
       ),
       backgroundColor: Colors.black,
       body: Center(
         child: Stack(
           children: <Widget>[
             _viewRows(),
-            _panel(),
+            // _panel(),
             _toolbar(),
           ],
         ),
@@ -307,3 +354,48 @@ class _GroupCallScreenState extends State<GroupCallScreen> {
     );
   }
 }
+// Container(
+// alignment: Alignment.bottomCenter,
+// padding: const EdgeInsets.symmetric(vertical: 48),
+// child: Row(
+// mainAxisAlignment: MainAxisAlignment.center,
+// children: <Widget>[
+// RawMaterialButton(
+// onPressed: _onToggleMute,
+// child: Icon(
+// muted ? Icons.mic_off : Icons.mic,
+// color: muted ? Colors.white : Colors.blueAccent,
+// size: 20.0,
+// ),
+// shape: CircleBorder(),
+// elevation: 2.0,
+// fillColor: muted ? Colors.blueAccent : Colors.white,
+// padding: const EdgeInsets.all(12.0),
+// ),
+// RawMaterialButton(
+// onPressed: () => _onCallEnd(context),
+// child: Icon(
+// Icons.call_end,
+// color: Colors.white,
+// size: 35.0,
+// ),
+// shape: CircleBorder(),
+// elevation: 2.0,
+// fillColor: Colors.redAccent,
+// padding: const EdgeInsets.all(15.0),
+// ),
+// RawMaterialButton(
+// onPressed: _onSwitchCamera,
+// child: Icon(
+// Icons.switch_camera,
+// color: Colors.blueAccent,
+// size: 20.0,
+// ),
+// shape: CircleBorder(),
+// elevation: 2.0,
+// fillColor: Colors.white,
+// padding: const EdgeInsets.all(12.0),
+// )
+// ],
+// ),
+// );
