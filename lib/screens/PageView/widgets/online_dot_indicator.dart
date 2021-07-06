@@ -24,7 +24,7 @@ class OnlineDotIndicator extends StatelessWidget {
 
     return StreamBuilder<DocumentSnapshot>(
       stream: _firebaseRepository.getUsersStream(
-        uid: uid!,
+        uid: uid,
       ),
       builder: (context, snapshot) {
         UserClass? user;

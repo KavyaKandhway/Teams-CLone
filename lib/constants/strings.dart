@@ -7,3 +7,4 @@ const String TIMESTAMP_FIELD = "timestamp";
 const String MESSAGE_TYPE_IMAGE = "image";
 const String MESSAGE_TYPE_TEXT = "text";
 const String MESSAGE_TYPE_CALL = "call";
+const String MESSAGE_TYPE_CALL_TEXT = "call_text";

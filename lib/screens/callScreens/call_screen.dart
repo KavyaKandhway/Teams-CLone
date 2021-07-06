@@ -8,10 +8,12 @@ import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:teams_clone/configs/agora_configs.dart';
 import 'package:teams_clone/models/call.dart';
+import 'package:teams_clone/models/user.dart';
 import 'package:teams_clone/provider/user_provider.dart';
 import 'package:teams_clone/resources/call_methods.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
+import 'package:teams_clone/screens/callScreens/video_call_chat_screen.dart';
 
 class CallScreen extends StatefulWidget {
   final Call? call;
@@ -319,7 +321,27 @@ class _CallScreenState extends State<CallScreen> {
               case 3:
                 _onToggleMuteAudio();
                 break;
-              case 2:
+              case 4:
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  UserClass user1 = UserClass(
+                    name: widget.call!.callerName,
+                    profilePhoto: widget.call!.callerPic,
+                    uid: widget.call!.callerId,
+                    username: widget.call!.callerName,
+                    email: widget.call!.callerName,
+                  );
+                  UserClass user2 = UserClass(
+                    name: widget.call!.receiverName,
+                    profilePhoto: widget.call!.receiverPic,
+                    uid: widget.call!.receiverId,
+                    username: widget.call!.receiverName,
+                    email: widget.call!.receiverName,
+                  );
+                  return VideoCallChatScreen(
+                    user1: user1,
+                    user2: user2,
+                  );
+                }));
                 break;
             }
           },
@@ -336,7 +358,6 @@ class _CallScreenState extends State<CallScreen> {
         child: Stack(
           children: <Widget>[
             _viewRows(),
-            // _panel(),
             _toolbar(),
           ],
         ),
