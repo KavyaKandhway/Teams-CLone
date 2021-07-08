@@ -103,17 +103,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         backgroundColor: UniversalVariables.blackColor,
         body: PageView(
           children: [
-            Center(
-              child: ChatListScreen(),
-            ),
             Container(
               child: GroupVideoCallScreen(),
             ),
             Center(
-              child: LogScreen(),
+              child: ChatListScreen(),
             ),
             Center(
-              child: Text("Contact List"),
+              child: LogScreen(),
             ),
           ],
           controller: pageController,
@@ -127,11 +124,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               items: [
                 BottomNavigationBarItem(
                   icon: Icon(
-                    (_page == 0) ? Icons.chat : Icons.chat_outlined,
+                    (_page == 0) ? Icons.people : Icons.people_outline,
                     color: (_page == 0) ? Colors.white : Colors.grey,
                   ),
                   title: Text(
-                    "Chat",
+                    "Teams",
                     style: TextStyle(
                       color: (_page == 0) ? Colors.white : Colors.grey,
                     ),
@@ -139,11 +136,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
-                    (_page == 1) ? Icons.people : Icons.people_outline,
+                    (_page == 1) ? Icons.chat : Icons.chat_outlined,
                     color: (_page == 1) ? Colors.white : Colors.grey,
                   ),
                   title: Text(
-                    "Teams",
+                    "Chat",
                     style: TextStyle(
                       color: (_page == 1) ? Colors.white : Colors.grey,
                     ),
@@ -158,18 +155,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     "Calls",
                     style: TextStyle(
                       color: (_page == 2) ? Colors.white : Colors.grey,
-                    ),
-                  ),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.contacts_outlined,
-                    color: (_page == 3) ? Colors.white : Colors.grey,
-                  ),
-                  title: Text(
-                    "Contacts",
-                    style: TextStyle(
-                      color: (_page == 3) ? Colors.white : Colors.grey,
                     ),
                   ),
                 ),

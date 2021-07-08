@@ -22,12 +22,6 @@ class ChatListScreen extends StatelessWidget {
       actions: [
         IconButton(
             icon: Icon(
-              Icons.video_call,
-              color: Colors.white,
-            ),
-            onPressed: () {}),
-        IconButton(
-            icon: Icon(
               Icons.sort,
               color: Colors.white,
             ),

@@ -9,7 +9,7 @@ class NewChatButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(50),
       ),
       child: Icon(
-        Icons.edit,
+        Icons.add,
         color: Colors.white,
         size: 25,
       ),

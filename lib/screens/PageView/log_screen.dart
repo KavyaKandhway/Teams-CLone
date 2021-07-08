@@ -10,7 +10,7 @@ class LogScreen extends StatelessWidget {
       backgroundColor: Colors.black12,
       appBar: CustomAppBar(
         leading: UserCircle(),
-        title: Text("Calls"),
+        title: Text("Call History"),
         centerTitle: false,
       ),
       body: Padding(
