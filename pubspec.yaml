@@ -41,6 +41,9 @@ dependencies:
   agora_rtc_engine: ^4.0.2
   flutter_share: ^2.0.0
   convex_bottom_bar: ^3.0.0
+  hive: ^2.0.4
+  sqflite: ^2.0.0+3
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

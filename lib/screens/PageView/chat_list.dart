@@ -101,7 +101,11 @@ class ChatListContainer extends StatelessWidget {
                     var docList = snapshot.data!.docs;
 
                     if (docList.isEmpty) {
-                      return QuietBox();
+                      return QuietBox(
+                        heading: "This is where all chats are listed",
+                        subtitle:
+                            "Add your friends and family to start chatting",
+                      );
                     }
                     return ListView.builder(
                       padding: EdgeInsets.all(10),

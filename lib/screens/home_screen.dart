@@ -5,7 +5,9 @@ import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:teams_clone/enum/user_state.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
+import 'package:teams_clone/resources/local_db/repository/log_repository.dart';
 import 'package:teams_clone/screens/PageView/group_video_call.dart';
+import 'package:teams_clone/screens/PageView/log_screen.dart';
 import 'package:teams_clone/utils/universal_variables.dart';
 import 'package:teams_clone/provider/user_provider.dart';
 import 'PageView/chat_list.dart';
@@ -32,6 +34,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
       _firebaseRepository.setUserState(
           userId: userProvider!.getUSer!.uid!, userState: UserState.Online);
+
+      LogRepository.init(isHive: true, dbName: userProvider!.getUSer!.uid);
     });
 
     WidgetsBinding.instance!.addObserver(this);
@@ -100,13 +104,13 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         body: PageView(
           children: [
             Center(
-              child: Text("Activity Screen"),
-            ),
-            Container(
               child: ChatListScreen(),
             ),
-            Center(
+            Container(
               child: GroupVideoCallScreen(),
+            ),
+            Center(
+              child: LogScreen(),
             ),
             Center(
               child: Text("Contact List"),
@@ -123,13 +127,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               items: [
                 BottomNavigationBarItem(
                   icon: Icon(
-                    (_page == 0)
-                        ? Icons.notifications
-                        : Icons.notifications_none,
+                    (_page == 0) ? Icons.chat : Icons.chat_outlined,
                     color: (_page == 0) ? Colors.white : Colors.grey,
                   ),
                   title: Text(
-                    "Activity",
+                    "Chat",
                     style: TextStyle(
                       color: (_page == 0) ? Colors.white : Colors.grey,
                     ),
@@ -137,11 +139,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
-                    (_page == 1) ? Icons.chat : Icons.chat_outlined,
+                    (_page == 1) ? Icons.people : Icons.people_outline,
                     color: (_page == 1) ? Colors.white : Colors.grey,
                   ),
                   title: Text(
-                    "Chat",
+                    "Teams",
                     style: TextStyle(
                       color: (_page == 1) ? Colors.white : Colors.grey,
                     ),
@@ -149,11 +151,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
-                    (_page == 2) ? Icons.videocam : Icons.videocam_outlined,
+                    (_page == 2) ? Icons.call : Icons.call_outlined,
                     color: (_page == 2) ? Colors.white : Colors.grey,
                   ),
                   title: Text(
-                    "Meet",
+                    "Calls",
                     style: TextStyle(
                       color: (_page == 2) ? Colors.white : Colors.grey,
                     ),
@@ -161,11 +163,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.more_horiz_rounded,
+                    Icons.contacts_outlined,
                     color: (_page == 3) ? Colors.white : Colors.grey,
                   ),
                   title: Text(
-                    "More",
+                    "Contacts",
                     style: TextStyle(
                       color: (_page == 3) ? Colors.white : Colors.grey,
                     ),
