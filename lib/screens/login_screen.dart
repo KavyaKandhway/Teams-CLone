@@ -4,15 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:teams_clone/resources/auth_methods.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
 import 'package:teams_clone/screens/home_screen.dart';
+import 'package:teams_clone/screens/loginScreens/login_screen.dart';
+import 'package:teams_clone/screens/loginScreens/login_screen_3.dart';
+import 'package:teams_clone/screens/loginScreens/theme.dart';
 import 'package:teams_clone/utils/universal_variables.dart';
 
 class LoginScreen extends StatefulWidget {
+  ThemeBloc? themeBloc;
+  LoginScreen({this.themeBloc});
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _LoginScreenState createState() => _LoginScreenState(themeBloc: themeBloc);
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  ThemeBloc? themeBloc;
+  _LoginScreenState({this.themeBloc});
   FirebaseRepository _repository = FirebaseRepository();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    themeBloc = ThemeBloc();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -64,9 +78,8 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: const EdgeInsets.all(10),
       child: TextButton(
           onPressed: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) {
-              return EmailPasswordScreen();
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return LoginScreen3(themeBloc: themeBloc);
             }));
           },
           child: Container(
@@ -99,132 +112,6 @@ class _LoginScreenState extends State<LoginScreen> {
         print("there was an error");
       }
     });
-  }
-
-  void authenticateUser(User user) {
-    _repository.authenticateuser(user).then((isNewUser) {
-      if (isNewUser) {
-        _repository.addDataToDb(user).then((value) {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) {
-            return HomeScreen();
-          }));
-        });
-      } else {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return HomeScreen();
-        }));
-      }
-    });
-  }
-}
-
-class EmailPasswordScreen extends StatefulWidget {
-  @override
-  _EmailPasswordScreenState createState() => _EmailPasswordScreenState();
-}
-
-class _EmailPasswordScreenState extends State<EmailPasswordScreen> {
-  FirebaseRepository _repository = FirebaseRepository();
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Login"),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: EdgeInsets.all(10),
-              width: MediaQuery.of(context).size.width,
-              child: Text(
-                "Enter email id",
-                textAlign: TextAlign.left,
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              width: MediaQuery.of(context).size.width,
-              child: TextField(
-                controller: email,
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              width: MediaQuery.of(context).size.width,
-              child: Text(
-                "Enter password",
-                textAlign: TextAlign.left,
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              width: MediaQuery.of(context).size.width,
-              child: TextField(
-                controller: password,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.indigo,
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      AuthenticationHelper()
-                          .signIn(email: email.text, password: password.text)
-                          .then((user) {
-                        if (user != null) {
-                          authenticateUser(user);
-                        } else {
-                          print("there was an error");
-                        }
-                      });
-                    },
-                    child: Text(
-                      "Login",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 50,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.indigo,
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      AuthenticationHelper()
-                          .signUp(email: email.text, password: password.text)
-                          .then((user) {
-                        if (user != null) {
-                          authenticateUser(user);
-                        } else {
-                          print("there was an error");
-                        }
-                      });
-                    },
-                    child: Text(
-                      "SignUp",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   void authenticateUser(User user) {

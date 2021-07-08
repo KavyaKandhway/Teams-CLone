@@ -44,6 +44,8 @@ dependencies:
   hive: ^2.0.4
   sqflite: ^2.0.0+3
   intl: ^0.17.0
+  google_fonts: ^2.1.0
+  flutter_feather_icons: ^2.0.0+1
 
 dev_dependencies:
   flutter_test:
