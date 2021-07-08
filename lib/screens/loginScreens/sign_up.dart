@@ -4,7 +4,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:teams_clone/resources/auth_methods.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
 import 'package:teams_clone/screens/home_screen.dart';
-import 'package:teams_clone/screens/loginScreens/login_screen.dart';
+import 'package:teams_clone/screens/loginScreens/clip.dart';
 
 import 'package:teams_clone/screens/loginScreens/login_screen_3.dart';
 import 'package:teams_clone/screens/loginScreens/theme.dart';

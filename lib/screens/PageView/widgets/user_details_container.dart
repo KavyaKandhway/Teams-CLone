@@ -5,11 +5,14 @@ import 'package:teams_clone/provider/user_provider.dart';
 import 'package:teams_clone/resources/firebase_methods.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
 import 'package:teams_clone/screens/PageView/widgets/shimmering_logo.dart';
-import 'package:teams_clone/screens/login_screen.dart';
+import 'package:teams_clone/screens/loginScreens/start_screen.dart';
+import 'package:teams_clone/screens/loginScreens/theme.dart';
+
 import 'package:teams_clone/widgets/app_bart.dart';
 import 'package:teams_clone/widgets/cached_image.dart';
 
 class UserDetailsContainer extends StatelessWidget {
+  ThemeBloc? themeBloc;
   FirebaseRepository _firebaseRepository = FirebaseRepository();
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,10 @@ class UserDetailsContainer extends StatelessWidget {
       if (loggedOut) {
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
+          MaterialPageRoute(
+              builder: (context) => StartScreen(
+                    themeBloc: themeBloc,
+                  )),
           (Route<dynamic> route) => false,
         );
       }

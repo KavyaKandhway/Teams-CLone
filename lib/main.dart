@@ -8,7 +8,7 @@ import 'package:teams_clone/resources/firebase_repository.dart';
 import 'package:teams_clone/screens/home_screen.dart';
 import 'package:teams_clone/screens/loginScreens/start_screen.dart';
 import 'package:teams_clone/screens/loginScreens/theme.dart';
-import 'package:teams_clone/screens/login_screen.dart';
+
 import 'package:teams_clone/screens/search_screen.dart';
 import 'package:teams_clone/provider/user_provider.dart';
 

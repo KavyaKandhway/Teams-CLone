@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return PickupLayout(
       scaffold: Scaffold(
-        backgroundColor: UniversalVariables.blackColor,
+        backgroundColor: Colors.blueGrey.shade900,
         body: PageView(
           children: [
             Container(
@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 10),
             child: CupertinoTabBar(
-              backgroundColor: Colors.black,
+              backgroundColor: Colors.blueGrey.shade900,
               items: [
                 BottomNavigationBarItem(
                   icon: Icon(
