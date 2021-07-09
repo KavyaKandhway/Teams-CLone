@@ -6,6 +6,8 @@ import 'package:teams_clone/models/contact.dart';
 import 'package:teams_clone/provider/user_provider.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
 import 'package:teams_clone/screens/PageView/widgets/contact_share_view.dart';
+import 'package:teams_clone/screens/loginScreens/values/values.dart';
+import 'package:teams_clone/widgets/app_bart.dart';
 
 class ShareDialog extends StatefulWidget {
   final String? roomId;
@@ -24,10 +26,14 @@ class _ShareDialogState extends State<ShareDialog> {
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Share"),
+      appBar: CustomAppBar(
+        title: Text(
+          "Share",
+          style: TextStyle(color: Colors.blueGrey.shade100),
+        ),
+        gradient: Gradients.headerOverlayGradient,
       ),
-      backgroundColor: Colors.grey.shade800,
+      backgroundColor: Colors.blueGrey.shade900,
       body: Column(
         children: [
           StreamBuilder<QuerySnapshot>(
@@ -66,7 +72,7 @@ class _ShareDialogState extends State<ShareDialog> {
           ),
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey.shade600,
+              gradient: Gradients.curvesGradient3,
               borderRadius: BorderRadius.circular(5),
             ),
             height: 50,

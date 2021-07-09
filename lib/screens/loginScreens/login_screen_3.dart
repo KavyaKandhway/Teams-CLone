@@ -100,7 +100,7 @@ class _LoginScreen3State extends State<LoginScreen3> {
             ),
             Positioned(
               child: Container(
-                margin: const EdgeInsets.all(Sizes.MARGIN_0),
+                margin: const EdgeInsets.all(0),
                 child: Column(
                   children: <Widget>[
                     Expanded(
@@ -126,7 +126,7 @@ class _LoginScreen3State extends State<LoginScreen3> {
                             child: Text(
                               "Forgot ?",
                               style: textTheme.body1!.copyWith(
-                                fontSize: Sizes.TEXT_SIZE_16,
+                                fontSize: 16,
                                 color: AppColors.lightBlueShade1,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -160,7 +160,7 @@ class _LoginScreen3State extends State<LoginScreen3> {
                                 }));
                               },
                               child: Text(
-                                StringConst.REGISTER,
+                                "Register",
                                 style: textTheme.button!.copyWith(
                                   color: AppColors.orangeShade1,
                                 ),
@@ -192,11 +192,11 @@ class _LoginScreen3State extends State<LoginScreen3> {
             width: widthOfScreen * 0.85,
             child: Card(
               color: Colors.blueGrey.shade800,
-              elevation: Sizes.ELEVATION_4,
+              elevation: 4,
               margin: const EdgeInsets.only(
-                left: Sizes.MARGIN_0,
-                top: Sizes.MARGIN_8,
-                bottom: Sizes.MARGIN_8,
+                left: 0,
+                top: 8,
+                bottom: 8,
               ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -205,7 +205,7 @@ class _LoginScreen3State extends State<LoginScreen3> {
                 ),
               ),
               child: Container(
-                margin: const EdgeInsets.symmetric(vertical: Sizes.MARGIN_16),
+                margin: const EdgeInsets.symmetric(vertical: 16),
                 child: Column(
                   children: <Widget>[
                     CustomTextFormField(
@@ -213,9 +213,9 @@ class _LoginScreen3State extends State<LoginScreen3> {
                       prefixIcon: Icon(
                         FeatherIcons.user,
                         color: AppColors.lightBlueShade1,
-                        size: Sizes.ICON_SIZE_20,
+                        size: 20,
                       ),
-                      hintText: StringConst.EMAIL_2,
+                      hintText: "Email",
                       textEditingController: email,
                       hintTextStyle: Styles.customTextStyle(
                         color: AppColors.lightBlueShade2,
@@ -223,21 +223,21 @@ class _LoginScreen3State extends State<LoginScreen3> {
                       textStyle: Styles.customTextStyle(
                         color: Colors.blueGrey.shade100,
                       ),
-                      contentPadding: EdgeInsets.only(top: Sizes.PADDING_16),
+                      contentPadding: EdgeInsets.only(top: 16),
                       enabledBorder: Borders.noBorder,
                       border: Borders.noBorder,
                       focusedBorder: Borders.noBorder,
                     ),
                     Divider(
                       color: AppColors.grey,
-                      height: Sizes.HEIGHT_20,
+                      height: 20,
                     ),
                     CustomTextFormField(
                       hasPrefixIcon: true,
                       prefixIcon: Icon(
                         FeatherIcons.lock,
                         color: AppColors.lightBlueShade1,
-                        size: Sizes.ICON_SIZE_20,
+                        size: 20,
                       ),
                       hintText: "********",
                       hintTextStyle: Styles.customTextStyle(
@@ -248,7 +248,7 @@ class _LoginScreen3State extends State<LoginScreen3> {
                       ),
                       textEditingController: password,
                       obscured: true,
-                      contentPadding: EdgeInsets.only(top: Sizes.PADDING_16),
+                      contentPadding: EdgeInsets.only(top: 16),
                       enabledBorder: Borders.noBorder,
                       border: Borders.noBorder,
                       focusedBorder: Borders.noBorder,
@@ -262,11 +262,11 @@ class _LoginScreen3State extends State<LoginScreen3> {
             left: widthOfScreen * 0.75,
             top: buttonOffset,
             child: Container(
-              height: Sizes.HEIGHT_60,
-              width: Sizes.WIDTH_60,
+              height: 60,
+              width: 60,
               child: RaisedButton(
-                padding: const EdgeInsets.all(Sizes.PADDING_0),
-                elevation: Sizes.ELEVATION_8,
+                padding: const EdgeInsets.all(0),
+                elevation: 8,
                 onPressed: () {
                   AuthenticationHelper()
                       .signIn(email: email.text, password: password.text)
@@ -279,18 +279,18 @@ class _LoginScreen3State extends State<LoginScreen3> {
                   });
                 },
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(Sizes.RADIUS_30),
+                  borderRadius: BorderRadius.circular(30),
                 ),
                 child: Ink(
-                  height: Sizes.HEIGHT_60,
-                  width: Sizes.WIDTH_60,
+                  height: 60,
+                  width: 60,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Sizes.RADIUS_30),
+                    borderRadius: BorderRadius.circular(30),
                     gradient: Gradients.buttonGradient,
                   ),
                   child: Icon(
                     FeatherIcons.arrowRight,
-                    size: Sizes.ICON_SIZE_30,
+                    size: 30,
                     color: AppColors.white,
                   ),
                 ),

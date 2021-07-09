@@ -11,3 +11,5 @@ const String MESSAGE_TYPE_CALL_TEXT = "call_text";
 const String CALL_STATUS_DIALED = "dialed";
 const String CALL_STATUS_RECEIVED = "received";
 const String CALL_STATUS_MISSED = "missed";
+const String noImageAvailable =
+    "https://irisvision.com/wp-content/uploads/2019/01/no-profile-1.png";

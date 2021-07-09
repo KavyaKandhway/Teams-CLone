@@ -7,6 +7,7 @@ import 'package:teams_clone/models/user.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
 import 'package:teams_clone/screens/PageView/widgets/share_dialog.dart';
 import 'package:teams_clone/screens/callScreens/group_call_screen.dart';
+import 'package:teams_clone/screens/loginScreens/values/values.dart';
 
 import 'package:teams_clone/utils/permission.dart';
 import 'package:flutter_share/flutter_share.dart';
@@ -46,7 +47,7 @@ class _CreateRoomDialogState extends State<CreateRoomDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.grey.shade800,
+      backgroundColor: Colors.blueGrey.shade800,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       title: Text(
         "Room Created",
@@ -74,7 +75,7 @@ class _CreateRoomDialogState extends State<CreateRoomDialog> {
               margin: EdgeInsets.all(5),
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
-                  color: Colors.grey.shade600,
+                  color: Colors.blueGrey.shade600,
                   borderRadius: BorderRadius.circular(3),
                   border: Border.all(color: Colors.grey.shade200, width: 1)),
               child: Text(
@@ -97,7 +98,7 @@ class _CreateRoomDialogState extends State<CreateRoomDialog> {
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.circular(6),
-                  color: Colors.black,
+                  gradient: Gradients.curvesGradient3,
                 ),
                 child: TextButton(
                   onPressed: () {
@@ -130,7 +131,7 @@ class _CreateRoomDialogState extends State<CreateRoomDialog> {
               Container(
                 decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
-                    color: Colors.black,
+                    gradient: Gradients.curvesGradient3,
                     borderRadius: BorderRadius.circular(6)),
                 child: TextButton(
                   onPressed: () async {

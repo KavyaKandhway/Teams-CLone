@@ -9,6 +9,7 @@ import 'package:teams_clone/resources/firebase_repository.dart';
 import 'package:teams_clone/screens/PageView/widgets/contact_view.dart';
 import 'package:teams_clone/screens/PageView/widgets/new_chat_button.dart';
 import 'package:teams_clone/screens/PageView/widgets/user_circle.dart';
+import 'package:teams_clone/screens/loginScreens/values/values.dart';
 import 'package:teams_clone/utils/utilities.dart';
 import 'package:teams_clone/widgets/app_bart.dart';
 import 'package:teams_clone/widgets/custom_tile.dart';
@@ -27,6 +28,7 @@ class ChatListScreen extends StatelessWidget {
             ),
             onPressed: () {})
       ],
+      gradient: Gradients.headerOverlayGradient,
       centerTitle: false,
       title: Text("Chat"),
       leading: UserCircle(),
@@ -35,11 +37,13 @@ class ChatListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black12,
-      appBar: customAppBar(context),
-      floatingActionButton: NewChatButton(),
-      body: ChatListContainer(),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.blueGrey.shade900,
+        appBar: customAppBar(context),
+        floatingActionButton: NewChatButton(),
+        body: ChatListContainer(),
+      ),
     );
   }
 }
@@ -59,26 +63,36 @@ class ChatListContainer extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, "/search_screen");
             },
-            child: Container(
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.black,
-              ),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                    child: Icon(
-                      Icons.search,
-                      color: Colors.grey.shade300,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(5.0),
+              child: Container(
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.blueGrey.shade700,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(0.0, 1.0), //(x,y)
+                      blurRadius: 1.0,
                     ),
-                  ),
-                  Text(
-                    "Search",
-                    style: TextStyle(color: Colors.grey, fontSize: 18),
-                  ),
-                ],
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.grey.shade300,
+                      ),
+                    ),
+                    Text(
+                      "Search",
+                      style: TextStyle(color: Colors.grey, fontSize: 18),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

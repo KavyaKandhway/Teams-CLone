@@ -8,6 +8,7 @@ import 'package:teams_clone/models/message.dart';
 import 'package:teams_clone/models/user.dart';
 import 'package:teams_clone/provider/user_provider.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
+import 'package:teams_clone/screens/loginScreens/values/values.dart';
 import 'package:teams_clone/widgets/cached_image.dart';
 import 'package:teams_clone/widgets/custom_tile.dart';
 
@@ -73,9 +74,8 @@ class _ShareViewLayoutState extends State<ShareViewLayout> {
           name: user.displayName != null
               ? user.displayName
               : user.email!.split('@')[0],
-          profilePhoto: user.photoURL != null
-              ? user.photoURL
-              : "https://irisvision.com/wp-content/uploads/2019/01/no-profile-1.png",
+          profilePhoto:
+              user.photoURL != null ? user.photoURL : noImageAvailable,
         );
       });
     });
@@ -87,7 +87,7 @@ class _ShareViewLayoutState extends State<ShareViewLayout> {
       leading: CachedImage(
         widget.contact!.profilePhoto != null
             ? widget.contact!.profilePhoto
-            : "https://irisvision.com/wp-content/uploads/2019/01/no-profile-1.png",
+            : noImageAvailable,
         radius: 60,
         isRound: true,
       ),
@@ -96,8 +96,8 @@ class _ShareViewLayoutState extends State<ShareViewLayout> {
             ? widget.contact!.name!
             : widget.contact!.email!.split('@')[0],
         style: TextStyle(
-          color: Colors.white,
-          fontSize: 14,
+          color: Colors.blueGrey.shade100,
+          fontSize: 16,
         ),
       ),
       subtitle: Text(
@@ -105,13 +105,13 @@ class _ShareViewLayoutState extends State<ShareViewLayout> {
             ? widget.contact!.username!
             : widget.contact!.email!.split('@')[0],
         style: TextStyle(
-          color: Colors.white,
+          color: Colors.blueGrey.shade100,
           fontSize: 14,
         ),
       ),
       trailing: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          gradient: Gradients.curvesGradient3,
           borderRadius: BorderRadius.circular(10),
         ),
         child: TextButton(
@@ -120,7 +120,7 @@ class _ShareViewLayoutState extends State<ShareViewLayout> {
           },
           child: Text(
             "Send",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Colors.white),
           ),
         ),
       ),

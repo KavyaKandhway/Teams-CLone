@@ -111,7 +111,7 @@ class _StartScreenState extends State<StartScreen> {
                                 padding: EdgeInsets.symmetric(horizontal: 20),
                                 margin: EdgeInsets.symmetric(vertical: 20),
                                 child: CustomButton(
-                                  title: StringConst.SIGN_IN,
+                                  title: "Login With Email",
                                   textStyle: textTheme.title!.copyWith(
                                       color: Colors.blueGrey.shade900),
                                   color: Colors.blueGrey.shade50,
@@ -125,8 +125,8 @@ class _StartScreenState extends State<StartScreen> {
                                 ),
                               ),
                               Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: Sizes.MARGIN_16),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 16),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
@@ -155,7 +155,7 @@ class _StartScreenState extends State<StartScreen> {
                                 padding: EdgeInsets.symmetric(horizontal: 20),
                                 margin: EdgeInsets.symmetric(vertical: 20),
                                 child: CustomButton(
-                                  title: StringConst.SIGN_IN_WITH_GOOGLE,
+                                  title: "Login With Google",
                                   textStyle: textTheme.title,
                                   hasIcon: true,
                                   color: Colors.blueGrey.shade50,
@@ -164,8 +164,8 @@ class _StartScreenState extends State<StartScreen> {
                                   },
                                   icon: Image.asset(
                                     'images/google.png',
-                                    height: Sizes.HEIGHT_25,
-                                    width: Sizes.WIDTH_25,
+                                    height: 25,
+                                    width: 25,
                                   ),
                                 ),
                               ),
@@ -218,9 +218,9 @@ class CustomButton extends StatelessWidget {
     this.title,
     this.onPressed,
 //    this.width = Sizes.WIDTH_150,
-    this.height = Sizes.HEIGHT_50,
-    this.elevation = Sizes.ELEVATION_1,
-    this.borderRadius = Sizes.RADIUS_24,
+    this.height = 50,
+    this.elevation = 1,
+    this.borderRadius = 24,
     this.color = AppColors.blackShade5,
     this.borderSide = Borders.defaultPrimaryBorder,
     this.textStyle,
@@ -276,8 +276,8 @@ class CustomButton extends StatelessWidget {
 
 class CustomDivider extends StatelessWidget {
   CustomDivider({
-    this.width = Sizes.WIDTH_80,
-    this.height = Sizes.HEIGHT_1,
+    this.width = 80,
+    this.height = 1,
     this.color = AppColors.white,
   });
 

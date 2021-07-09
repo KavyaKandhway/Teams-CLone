@@ -1,12 +1,10 @@
 part of 'values.dart';
 
 class Styles {
-
-
   static TextStyle customTextStyle({
     Color color = AppColors.blackShade3,
     FontWeight fontWeight = FontWeight.w600,
-    double fontSize = Sizes.TEXT_SIZE_14,
+    double fontSize = 14,
     FontStyle fontStyle: FontStyle.normal,
   }) {
     return GoogleFonts.roboto(
@@ -20,7 +18,7 @@ class Styles {
   static TextStyle customTextStyle2({
     Color color = AppColors.blackShade7,
     FontWeight fontWeight = FontWeight.w600,
-    double fontSize = Sizes.TEXT_SIZE_16,
+    double fontSize = 16,
     FontStyle fontStyle: FontStyle.normal,
   }) {
     return GoogleFonts.comfortaa(

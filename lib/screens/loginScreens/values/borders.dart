@@ -2,12 +2,12 @@ part of values;
 
 class Borders {
   static const BorderSide defaultPrimaryBorder =
-      BorderSide(width: Sizes.WIDTH_0, style: BorderStyle.none);
+      BorderSide(width: 0, style: BorderStyle.none);
 
   static const UnderlineInputBorder primaryInputBorder = UnderlineInputBorder(
     borderSide: BorderSide(
       color: AppColors.whiteShade1,
-      width: Sizes.WIDTH_1,
+      width: 1,
       style: BorderStyle.solid,
     ),
   );
@@ -15,7 +15,7 @@ class Borders {
   static const UnderlineInputBorder enabledBorder = UnderlineInputBorder(
     borderSide: BorderSide(
       color: AppColors.whiteShade1,
-      width: Sizes.WIDTH_1,
+      width: 1,
       style: BorderStyle.solid,
     ),
   );
@@ -23,7 +23,7 @@ class Borders {
   static const UnderlineInputBorder focusedBorder = UnderlineInputBorder(
     borderSide: BorderSide(
       color: AppColors.blackShade3,
-      width: Sizes.WIDTH_2,
+      width: 2,
       style: BorderStyle.solid,
     ),
   );
@@ -31,34 +31,34 @@ class Borders {
   static const UnderlineInputBorder disabledBorder = UnderlineInputBorder(
     borderSide: BorderSide(
       color: AppColors.grey,
-      width: Sizes.WIDTH_1,
+      width: 1,
       style: BorderStyle.solid,
     ),
   );
 
   static const OutlineInputBorder outlineEnabledBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(Sizes.RADIUS_30)),
+    borderRadius: BorderRadius.all(Radius.circular(30)),
     borderSide: BorderSide(
       color: AppColors.grey,
-      width: Sizes.WIDTH_1,
+      width: 1,
       style: BorderStyle.solid,
     ),
   );
 
   static const OutlineInputBorder outlineFocusedBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(Sizes.RADIUS_30)),
+    borderRadius: BorderRadius.all(Radius.circular(30)),
     borderSide: BorderSide(
       color: AppColors.grey,
-      width: Sizes.WIDTH_1,
+      width: 1,
       style: BorderStyle.solid,
     ),
   );
 
   static const OutlineInputBorder outlineBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(Sizes.RADIUS_30)),
+    borderRadius: BorderRadius.all(Radius.circular(30)),
     borderSide: BorderSide(
       color: AppColors.grey,
-      width: Sizes.WIDTH_1,
+      width: 1,
       style: BorderStyle.solid,
     ),
   );
@@ -71,7 +71,7 @@ class Borders {
 
   static customBorder({
     Color color = AppColors.blackShade10,
-    double width = Sizes.WIDTH_1,
+    double width = 1,
     BorderStyle style = BorderStyle.solid,
   }) {
     return BorderSide(
@@ -82,12 +82,11 @@ class Borders {
   }
 
   static customOutlineInputBorder({
-    double borderRadius = Sizes.RADIUS_12,
+    double borderRadius = 12,
     Color color = AppColors.grey,
-    double width = Sizes.WIDTH_1,
+    double width = 1,
     BorderStyle style = BorderStyle.solid,
   }) {
-
     return OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
       borderSide: BorderSide(
@@ -100,7 +99,7 @@ class Borders {
 
   static customUnderlineInputBorder({
     Color color = AppColors.grey,
-    double width = Sizes.WIDTH_1,
+    double width = 1,
     BorderStyle style = BorderStyle.solid,
   }) {
     return UnderlineInputBorder(

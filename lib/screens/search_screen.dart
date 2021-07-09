@@ -35,49 +35,53 @@ class _SearchScreenState extends State<SearchScreen> {
       preferredSize: const Size.fromHeight(kToolbarHeight + 20),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
-          height: 50,
-          decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                child: Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                ),
-              ),
-              Container(
-                height: 40,
-                width: MediaQuery.of(context).size.width - 60,
-                color: Colors.black,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 20, 0, 0),
-                  child: TextField(
-                    cursorColor: Colors.white,
-                    style: TextStyle(color: Colors.grey, fontSize: 20),
-                    decoration: InputDecoration(
-                      hintText: "Search",
-                      focusColor: Colors.black,
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.zero,
-                        borderSide: BorderSide(color: Colors.black, width: 2.0),
-                      ),
-                    ),
-                    controller: searchController,
-                    onChanged: (val) {
-                      setState(() {
-                        query = val;
-                      });
-                    },
-                    autofocus: true,
+        child: ClipRRect(
+          child: Container(
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.blueGrey.shade700,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Colors.blueGrey.shade100,
                   ),
                 ),
-              ),
-            ],
+                Container(
+                  height: 40,
+                  width: MediaQuery.of(context).size.width - 60,
+                  color: Colors.blueGrey.shade700,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 20, 0, 0),
+                    child: TextField(
+                      cursorColor: Colors.blueGrey.shade100,
+                      style: TextStyle(
+                          color: Colors.blueGrey.shade100, fontSize: 20),
+                      decoration: InputDecoration(
+                        hintText: "Search",
+                        focusColor: Colors.blueGrey.shade700,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.zero,
+                          borderSide: BorderSide(
+                              color: Colors.blueGrey.shade700, width: 2.0),
+                        ),
+                      ),
+                      controller: searchController,
+                      onChanged: (val) {
+                        setState(() {
+                          query = val;
+                        });
+                      },
+                      autofocus: true,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -140,7 +144,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey.shade900,
+        backgroundColor: Colors.blueGrey.shade900,
         appBar: SearchAppBar(context),
         bottomNavigationBar: Container(
             padding: EdgeInsets.symmetric(horizontal: 20),

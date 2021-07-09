@@ -50,7 +50,7 @@ class RoomID extends StatelessWidget {
           alignment: Alignment.centerLeft,
           width: 200,
           decoration: BoxDecoration(
-            color: Colors.indigo.shade200,
+            color: Colors.black38,
             borderRadius: BorderRadius.circular(5),
           ),
           child: Center(

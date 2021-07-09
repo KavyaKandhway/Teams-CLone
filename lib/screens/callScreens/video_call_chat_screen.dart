@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/scheduler.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:teams_clone/screens/loginScreens/values/values.dart';
 import 'package:teams_clone/utils/call_utilities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -66,10 +67,10 @@ class _VideoCallChatScreenState extends State<VideoCallChatScreen> {
     _imageUploadProvider = Provider.of<ImageUploadProvider>(context);
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.black12,
-        appBar: AppBar(
+        backgroundColor: Colors.blueGrey.shade900,
+        appBar: CustomAppBar(
           title: Text("Chat"),
-          backgroundColor: Colors.indigo.shade600,
+          gradient: Gradients.headerOverlayGradient,
         ),
         body: Column(
           children: [
@@ -146,7 +147,7 @@ class _VideoCallChatScreenState extends State<VideoCallChatScreen> {
         maxWidth: MediaQuery.of(context).size.width * 0.65,
       ),
       decoration: BoxDecoration(
-        color: Colors.indigo.shade600,
+        gradient: Gradients.curvesGradient2,
         borderRadius: BorderRadius.only(
           topLeft: messageRadius,
           topRight: messageRadius,
@@ -162,7 +163,6 @@ class _VideoCallChatScreenState extends State<VideoCallChatScreen> {
 
   getMessage(Message message) {
     if (message.type == MESSAGE_TYPE_CALL_TEXT) {
-      print("here message");
       return Text(
         message.message!,
         style: TextStyle(
@@ -181,7 +181,7 @@ class _VideoCallChatScreenState extends State<VideoCallChatScreen> {
         maxWidth: MediaQuery.of(context).size.width * 0.65,
       ),
       decoration: BoxDecoration(
-        color: Colors.grey.shade900,
+        gradient: Gradients.curvesGradient3,
         borderRadius: BorderRadius.only(
           bottomLeft: messageRadius,
           topRight: messageRadius,

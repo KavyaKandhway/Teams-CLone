@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:teams_clone/screens/PageView/widgets/log_list.dart';
 import 'package:teams_clone/screens/PageView/widgets/user_circle.dart';
+import 'package:teams_clone/screens/loginScreens/values/values.dart';
 import 'package:teams_clone/widgets/app_bart.dart';
 
 class LogScreen extends StatelessWidget {
@@ -9,6 +10,7 @@ class LogScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black12,
       appBar: CustomAppBar(
+        gradient: Gradients.headerOverlayGradient,
         leading: UserCircle(),
         title: Text("Call History"),
         centerTitle: false,

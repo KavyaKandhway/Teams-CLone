@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:teams_clone/constants/strings.dart';
 import 'package:teams_clone/models/user.dart';
 import 'package:teams_clone/provider/user_provider.dart';
 import 'package:teams_clone/resources/firebase_methods.dart';
@@ -7,6 +8,7 @@ import 'package:teams_clone/resources/firebase_repository.dart';
 import 'package:teams_clone/screens/PageView/widgets/shimmering_logo.dart';
 import 'package:teams_clone/screens/loginScreens/start_screen.dart';
 import 'package:teams_clone/screens/loginScreens/theme.dart';
+import 'package:teams_clone/screens/loginScreens/values/values.dart';
 
 import 'package:teams_clone/widgets/app_bart.dart';
 import 'package:teams_clone/widgets/cached_image.dart';
@@ -35,10 +37,11 @@ class UserDetailsContainer extends StatelessWidget {
       child: Column(
         children: [
           CustomAppBar(
+            gradient: Gradients.headerOverlayGradient,
             leading: IconButton(
               icon: Icon(
                 Icons.arrow_back,
-                color: Colors.white,
+                color: Colors.blueGrey.shade100,
               ),
               onPressed: () => Navigator.maybePop(context),
             ),
@@ -49,7 +52,8 @@ class UserDetailsContainer extends StatelessWidget {
                 onPressed: () => signOut(),
                 child: Text(
                   "Sign Out",
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style:
+                      TextStyle(color: Colors.blueGrey.shade100, fontSize: 12),
                 ),
               ),
             ],
@@ -67,13 +71,12 @@ class UserDetailsBody extends StatelessWidget {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
     final UserClass? user = userProvider.getUSer;
     return Container(
+      color: Colors.blueGrey.shade900,
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       child: Row(
         children: [
           CachedImage(
-            user!.profilePhoto != null
-                ? user.profilePhoto
-                : "https://irisvision.com/wp-content/uploads/2019/01/no-profile-1.png",
+            user!.profilePhoto != null ? user.profilePhoto : noImageAvailable,
             isRound: true,
             radius: 50,
           ),

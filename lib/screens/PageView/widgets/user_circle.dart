@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:teams_clone/provider/user_provider.dart';
 import 'package:teams_clone/screens/PageView/widgets/user_details_container.dart';
+import 'package:teams_clone/screens/loginScreens/values/values.dart';
 import 'package:teams_clone/utils/utilities.dart';
 
 class UserCircle extends StatelessWidget {
@@ -11,7 +12,7 @@ class UserCircle extends StatelessWidget {
     return GestureDetector(
       onTap: () => showModalBottomSheet(
         context: context,
-        backgroundColor: Colors.grey.shade900,
+        backgroundColor: Colors.blueGrey.shade900,
         builder: (context) => UserDetailsContainer(),
         isScrollControlled: true,
       ),
@@ -19,10 +20,9 @@ class UserCircle extends StatelessWidget {
         height: 30,
         width: 30,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.black, width: 2),
-          shape: BoxShape.circle,
-          color: Colors.indigo,
-        ),
+            border: Border.all(color: Colors.black, width: 2),
+            shape: BoxShape.circle,
+            gradient: Gradients.curvesGradient3),
         child: Stack(
           children: [
             Align(

@@ -156,36 +156,36 @@ class _SignUpScreen3State extends State<SignUpScreen3> {
                       prefixIcon: Icon(
                         FeatherIcons.mail,
                         color: AppColors.lightBlueShade1,
-                        size: Sizes.ICON_SIZE_20,
+                        size: 20,
                       ),
-                      hintText: StringConst.EMAIL_ADDRESS,
+                      hintText: "Email",
                       hintTextStyle: Styles.customTextStyle(
                           color: AppColors.lightBlueShade2),
                       textStyle: Styles.customTextStyle(
                         color: Colors.blueGrey.shade100,
                       ),
-                      contentPadding: EdgeInsets.only(top: Sizes.PADDING_16),
+                      contentPadding: EdgeInsets.only(top: 16),
                       enabledBorder: Borders.noBorder,
                       border: Borders.noBorder,
                       focusedBorder: Borders.noBorder,
                     ),
-                    Divider(color: AppColors.grey, height: Sizes.HEIGHT_16),
+                    Divider(color: AppColors.grey, height: 16),
                     CustomTextFormField(
                       textEditingController: password,
                       hasPrefixIcon: true,
                       prefixIcon: Icon(
                         FeatherIcons.lock,
                         color: AppColors.lightBlueShade1,
-                        size: Sizes.ICON_SIZE_20,
+                        size: 20,
                       ),
                       hintTextStyle: Styles.customTextStyle(
                           color: AppColors.lightBlueShade2),
                       textStyle: Styles.customTextStyle(
                         color: Colors.blueGrey.shade100,
                       ),
-                      hintText: StringConst.PASSWORD,
+                      hintText: "Password",
                       obscured: true,
-                      contentPadding: EdgeInsets.only(top: Sizes.PADDING_16),
+                      contentPadding: EdgeInsets.only(top: 16),
                       enabledBorder: Borders.noBorder,
                       border: Borders.noBorder,
                       focusedBorder: Borders.noBorder,
@@ -199,14 +199,14 @@ class _SignUpScreen3State extends State<SignUpScreen3> {
             left: widthOfScreen * 0.78,
             top: 50,
             child: Container(
-              height: Sizes.HEIGHT_60,
-              width: Sizes.WIDTH_60,
+              height: 60,
+              width: 60,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     primary: Colors.blueGrey.shade800,
                     elevation: 8, //elevation of button
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(Sizes.RADIUS_30),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                     padding: EdgeInsets.all(0)),
                 onPressed: () {
@@ -229,7 +229,7 @@ class _SignUpScreen3State extends State<SignUpScreen3> {
                   ),
                   child: Icon(
                     FeatherIcons.check,
-                    size: Sizes.ICON_SIZE_30,
+                    size: 30,
                     color: AppColors.white,
                   ),
                 ),

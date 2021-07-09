@@ -4,6 +4,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:teams_clone/models/user.dart';
 import 'package:teams_clone/resources/firebase_repository.dart';
 import 'package:teams_clone/screens/callScreens/group_call_screen.dart';
+import 'package:teams_clone/screens/loginScreens/values/values.dart';
 
 import 'package:teams_clone/utils/permission.dart';
 
@@ -35,7 +36,7 @@ class _JoinRoomDialogState extends State<JoinRoomDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        backgroundColor: Colors.grey.shade800,
+        backgroundColor: Colors.blueGrey.shade800,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         title: Text(
           "Join Room",
@@ -74,7 +75,7 @@ class _JoinRoomDialogState extends State<JoinRoomDialog> {
                 Container(
                   decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
-                      color: Colors.black,
+                      gradient: Gradients.curvesGradient3,
                       borderRadius: BorderRadius.circular(6)),
                   child: TextButton(
                     onPressed: () async {

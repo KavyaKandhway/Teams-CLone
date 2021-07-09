@@ -13,7 +13,10 @@ import 'package:teams_clone/provider/user_provider.dart';
 import 'package:teams_clone/resources/call_methods.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
+import 'package:teams_clone/screens/PageView/widgets/share_dialog.dart';
 import 'package:teams_clone/screens/callScreens/video_call_chat_screen.dart';
+import 'package:teams_clone/screens/loginScreens/values/values.dart';
+import 'package:teams_clone/widgets/app_bart.dart';
 
 class CallScreen extends StatefulWidget {
   final Call? call;
@@ -225,56 +228,6 @@ class _CallScreenState extends State<CallScreen> {
     return Container();
   }
 
-  /// Info panel to show logs
-  Widget _panel() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 48),
-      alignment: Alignment.bottomCenter,
-      child: FractionallySizedBox(
-        heightFactor: 0.5,
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 48),
-          child: ListView.builder(
-            reverse: true,
-            itemCount: _infoStrings.length,
-            itemBuilder: (BuildContext context, int index) {
-              if (_infoStrings.isEmpty) {
-                return Container();
-              }
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 3,
-                  horizontal: 10,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 2,
-                          horizontal: 5,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.yellowAccent,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Text(
-                          _infoStrings[index],
-                          style: TextStyle(color: Colors.blueGrey),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _toolbar() {
     if (widget.role == ClientRole.Audience) return Container();
     return Container(
@@ -283,7 +236,8 @@ class _CallScreenState extends State<CallScreen> {
         height: 60,
         child: ConvexAppBar(
           style: TabStyle.fixedCircle,
-          backgroundColor: Colors.indigo,
+          gradient: Gradients.curvesGradient3,
+          backgroundColor: Colors.blueGrey.shade900,
           color: Colors.white,
           items: [
             TabItem(
@@ -352,14 +306,21 @@ class _CallScreenState extends State<CallScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-        child: Stack(
-          children: <Widget>[
-            _viewRows(),
-            _toolbar(),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBar(
+          title: Text('Call'),
+          leading: Icon(Icons.videocam_outlined),
+          color: Colors.blueGrey.shade900,
+        ),
+        backgroundColor: Colors.black,
+        body: Center(
+          child: Stack(
+            children: <Widget>[
+              _viewRows(),
+              _toolbar(),
+            ],
+          ),
         ),
       ),
     );

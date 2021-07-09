@@ -19,10 +19,10 @@ class GroupVideoCallScreen extends StatelessWidget {
                 children: [
                   Container(
                       decoration: BoxDecoration(
-                        gradient: Gradients.curvesGradient2,
+                        gradient: Gradients.curvesGradient3,
                       ),
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.2,
+                      height: MediaQuery.of(context).size.height * 0.1,
                       child: Column(
                         children: [
                           SizedBox(
@@ -65,7 +65,8 @@ class GroupVideoCallScreen extends StatelessWidget {
                       top: 30,
                     ),
                     decoration: BoxDecoration(
-                        color: Colors.grey.shade900,
+                        gradient: Gradients.headerOverlayGradient,
+                        color: Colors.blueGrey.shade900,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(25),
                             topRight: Radius.circular(25))),

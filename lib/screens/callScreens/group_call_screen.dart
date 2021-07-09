@@ -7,6 +7,7 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:teams_clone/configs/agora_configs.dart';
 import 'package:teams_clone/screens/PageView/widgets/share_dialog.dart';
+import 'package:teams_clone/screens/loginScreens/values/values.dart';
 import 'package:teams_clone/widgets/app_bart.dart';
 
 class GroupCallScreen extends StatefulWidget {
@@ -185,7 +186,8 @@ class _GroupCallScreenState extends State<GroupCallScreen> {
         height: 60,
         child: ConvexAppBar(
           style: TabStyle.fixedCircle,
-          backgroundColor: Colors.indigo,
+          gradient: Gradients.curvesGradient3,
+          backgroundColor: Colors.blueGrey.shade900,
           color: Colors.white,
           items: [
             TabItem(
@@ -260,6 +262,8 @@ class _GroupCallScreenState extends State<GroupCallScreen> {
       appBar: CustomAppBar(
         title: Text('Meeting'),
         leading: Icon(Icons.videocam_outlined),
+        gradient: Gradients.headerOverlayGradient,
+        color: Colors.blueGrey.shade900,
         actions: [
           TextButton(
               onPressed: () {
@@ -283,7 +287,7 @@ class _GroupCallScreenState extends State<GroupCallScreen> {
                   ),
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.indigo,
+                  gradient: Gradients.curvesGradient3,
                   borderRadius: BorderRadius.circular(5),
                 ),
               )),

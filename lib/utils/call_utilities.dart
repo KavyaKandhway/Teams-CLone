@@ -35,7 +35,6 @@ class CallUtils {
     bool callMade = await callMethods.makeCall(call: call);
     call.hasDialed = true;
     if (callMade) {
-      print("callMade");
       LogRepository.addLogs(log);
       Navigator.push(
         context,

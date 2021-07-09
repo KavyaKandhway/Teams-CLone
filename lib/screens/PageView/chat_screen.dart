@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/scheduler.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:teams_clone/screens/loginScreens/values/values.dart';
 import 'package:teams_clone/utils/call_utilities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -52,9 +53,8 @@ class _ChatScreenState extends State<ChatScreen> {
           name: user.displayName != null
               ? user.displayName
               : user.email!.split('@')[0],
-          profilePhoto: user.photoURL != null
-              ? user.photoURL
-              : "https://irisvision.com/wp-content/uploads/2019/01/no-profile-1.png",
+          profilePhoto:
+              user.photoURL != null ? user.photoURL : noImageAvailable,
         );
       });
     });
@@ -65,7 +65,7 @@ class _ChatScreenState extends State<ChatScreen> {
     _imageUploadProvider = Provider.of<ImageUploadProvider>(context);
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.black12,
+        backgroundColor: Colors.blueGrey.shade900,
         appBar: customAppBar(context),
         body: Column(
           children: [
@@ -131,23 +131,23 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget senderLayout(Message message) {
     Radius messageRadius = Radius.circular(10);
     return Container(
-      margin: EdgeInsets.only(top: 12),
-      constraints: BoxConstraints(
-        maxWidth: MediaQuery.of(context).size.width * 0.65,
-      ),
-      decoration: BoxDecoration(
-        color: Colors.indigo.shade300,
-        borderRadius: BorderRadius.only(
-          topLeft: messageRadius,
-          topRight: messageRadius,
-          bottomLeft: messageRadius,
+        margin: EdgeInsets.only(top: 12),
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * 0.65,
         ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child: getMessage(message),
-      ),
-    );
+        decoration: BoxDecoration(
+          color: Colors.blueGrey.shade400,
+          gradient: Gradients.curvesGradient2,
+          borderRadius: BorderRadius.only(
+            topLeft: messageRadius,
+            topRight: messageRadius,
+            bottomLeft: messageRadius,
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(5),
+          child: getMessage(message),
+        ));
   }
 
   getMessage(Message message) {
@@ -197,7 +197,7 @@ class _ChatScreenState extends State<ChatScreen> {
         maxWidth: MediaQuery.of(context).size.width * 0.65,
       ),
       decoration: BoxDecoration(
-        color: Colors.grey.shade900,
+        gradient: Gradients.curvesGradient3,
         borderRadius: BorderRadius.only(
           bottomLeft: messageRadius,
           topRight: messageRadius,
@@ -205,7 +205,7 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(5),
         child: getMessage(message),
       ),
     );
@@ -292,7 +292,7 @@ class _ChatScreenState extends State<ChatScreen> {
           Container(
             padding: EdgeInsets.all(5),
             decoration: BoxDecoration(
-              color: Colors.indigo,
+              gradient: Gradients.curvesGradient2,
               shape: BoxShape.circle,
             ),
             child: GestureDetector(
@@ -416,6 +416,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   CustomAppBar customAppBar(context) {
     return CustomAppBar(
+      gradient: Gradients.headerOverlayGradient,
       leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -425,7 +426,7 @@ class _ChatScreenState extends State<ChatScreen> {
       title: Row(
         children: [
           CircleAvatar(
-            backgroundColor: Colors.indigo,
+            backgroundColor: Colors.blueGrey.shade100,
             backgroundImage: NetworkImage(widget.receiver!.profilePhoto!),
           ),
           SizedBox(
