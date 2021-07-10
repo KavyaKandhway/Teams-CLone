@@ -1,6 +1,7 @@
 # Teams_clone
+## Microsoft Engage 2021 Project
 
-A new Flutter application.
+A Flutter Application with video calling features (implemented using https://www.agora.io/en/ API), chatting feature along with user authentication.
 
 ## Getting Started
 
