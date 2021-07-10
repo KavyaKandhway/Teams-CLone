@@ -34,71 +34,74 @@ class _ShareDialogState extends State<ShareDialog> {
         gradient: Gradients.headerOverlayGradient,
       ),
       backgroundColor: Colors.blueGrey.shade900,
-      body: Column(
-        children: [
-          StreamBuilder<QuerySnapshot>(
-            stream: _firebaseRepository.fetchContacts(
-                userId: userProvider.getUSer!.uid!),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                var docList = snapshot.data!.docs;
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            StreamBuilder<QuerySnapshot>(
+              stream: _firebaseRepository.fetchContacts(
+                  userId: userProvider.getUSer!.uid!),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var docList = snapshot.data!.docs;
 
-                if (docList.isEmpty) {
-                  return Container();
+                  if (docList.isEmpty) {
+                    return Container();
+                  }
+
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.all(10),
+                    itemCount: docList.length,
+                    itemBuilder: (context, index) {
+                      Contact? contact = Contact.fromMap(
+                          docList[index].data() as Map<String, dynamic>);
+
+                      return ContactShareView(
+                        roomId: roomId,
+                        contact: contact,
+                      );
+                    },
+                  );
                 }
-
-                return ListView.builder(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.all(10),
-                  itemCount: docList.length,
-                  itemBuilder: (context, index) {
-                    Contact? contact = Contact.fromMap(
-                        docList[index].data() as Map<String, dynamic>);
-
-                    return ContactShareView(
-                      roomId: roomId,
-                      contact: contact,
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                gradient: Gradients.curvesGradient3,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              height: 50,
+              width: 200,
+              child: Center(
+                child: TextButton(
+                  onPressed: () async {
+                    await FlutterShare.share(
+                      title: 'Invitation for group video call',
+                      text: 'Hey there,\nEnter room ID to join the call.\n' +
+                          'ID- *' +
+                          roomId! +
+                          '*',
                     );
                   },
-                );
-              }
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              gradient: Gradients.curvesGradient3,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            height: 50,
-            width: 200,
-            child: Center(
-              child: TextButton(
-                onPressed: () async {
-                  await FlutterShare.share(
-                    title: 'Invitation for group video call',
-                    text: 'Hey there,\nEnter room ID to join the call.\n' +
-                        'ID- *' +
-                        roomId! +
-                        '*',
-                  );
-                },
-                child: Text(
-                  "Share on Other Apps",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
+                  child: Text(
+                    "Share on Other Apps",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
