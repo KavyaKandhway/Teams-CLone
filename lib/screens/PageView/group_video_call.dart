@@ -17,36 +17,38 @@ class GroupVideoCallScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                      decoration: BoxDecoration(
-                        gradient: Gradients.curvesGradient3,
-                      ),
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.1,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "Microsoft Teams",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                                fontSize: 20),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            "Easy connect with friends via video call.",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      )),
+                  Expanded(
+                    child: Container(
+                        decoration: BoxDecoration(
+                          gradient: Gradients.curvesGradient3,
+                        ),
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.1,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Microsoft Teams",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                  fontSize: 20),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              "Easy connect with friends via video call.",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        )),
+                  ),
                 ],
               ),
             ),
