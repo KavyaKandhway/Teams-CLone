@@ -15,8 +15,8 @@ In “adapt” phase a surprise feature was disclosed that is chatting within a 
 This is a mobile application developed using flutter and implemented various features using different flutter open source packages available. 
 #### Features: 
 - Authentication
- --	Email login/ signup
- --	Google login/signup
+  -	Email login/ signup
+  -	Google login/signup
 -	1:1 video calling
   o	User1 can call User2 while chatting with each other.
   o	User2 will receive a pickup screen letting him/her to either decline the call or receive it.
