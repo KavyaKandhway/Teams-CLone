@@ -43,13 +43,13 @@ This is a mobile application developed using flutter and implemented various fea
 -	Used various other packages for improving the UI of the application. 
 
 ## Experience
--As this is a communication based application let’s suppose two users User1 and User2 registers in the application either via google sign in or email password sign in. Ensure that the email entered while registering is a correct and valid email id.
--Once both the users login, they will be displayed Create Team/Join Team screen. The User1 need to open the chat screen and search for the name or email of User2 and text him/her. As soon as the user1 texts,  the chat screen of user2 is updated. Now both can chat with each other and share images.
--Now User1 calls User2 by tapping on the video calling icon on top right. User2 receives a pickup screen with receive/reject options. According to the user2’s choice, the call history is updated for both the users.
--If the User2 accepts the call then both of them is connected via video call with video and mic on/off option. They both can tap on the chat icon at bottom right and can chat within the video call. 
--Once the call is cut, they both can continue chatting and the messages inside the video call is also retained.
--For the group calling feature, User1 can create a room and share the code/link with any on his contacts lets say User2, User3, User4. All these three users will receive a message from User1 with a link to join the group video call. They can simply tap onto the button and join the call.
--The user can log out from the app by tapping on profile photo at top left. 
+- As this is a communication based application let’s suppose two users User1 and User2 registers in the application either via google sign in or email password sign in. Ensure that the email entered while registering is a correct and valid email id.
+- Once both the users login, they will be displayed Create Team/Join Team screen. The User1 need to open the chat screen and search for the name or email of User2 and text him/her. As soon as the user1 texts,  the chat screen of user2 is updated. Now both can chat with each other and share images.
+- Now User1 calls User2 by tapping on the video calling icon on top right. User2 receives a pickup screen with receive/reject options. According to the user2’s choice, the call history is updated for both the users.
+- If the User2 accepts the call then both of them is connected via video call with video and mic on/off option. They both can tap on the chat icon at bottom right and can chat within the video call. 
+- Once the call is cut, they both can continue chatting and the messages inside the video call is also retained.
+- For the group calling feature, User1 can create a room and share the code/link with any on his contacts lets say User2, User3, User4. All these three users will receive a message from User1 with a link to join the group video call. They can simply tap onto the button and join the call.
+- The user can log out from the app by tapping on profile photo at top left. 
 
 ## Data flow
 Once the user login through the application, the data is fetched from google/email sign in that firebase provides and is saved in our “user” database with unique uid (provided by firebase) as key. 
