@@ -18,10 +18,10 @@ This is a mobile application developed using flutter and implemented various fea
   -	Email login/ signup
   -	Google login/signup
 -	1:1 video calling
-  - User1 can call User2 while chatting with each other.
-  -	User2 will receive a pickup screen letting him/her to either decline the call or receive it.
-  -	Both the users can chat within the video call as well and can continue the chat even after the call ends.
-  -	Calling history is also saved in the database.
+    - User1 can call User2 while chatting with each other.
+    -	User2 will receive a pickup screen letting him/her to either decline the call or receive it.
+    -	Both the users can chat within the video call as well and can continue the chat even after the call ends.
+    -	Calling history is also saved in the database.
 -	Group video calling (more than 2 users)
   -	User1 can create a room and can share the link/code to other users.
   -	Code can be shared either within the app or to the other apps.
