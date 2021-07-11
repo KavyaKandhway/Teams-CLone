@@ -14,33 +14,33 @@ In “adapt” phase a surprise feature was disclosed that is chatting within a 
 ### Overview
 This is a mobile application developed using flutter and implemented various features using different flutter open source packages available. 
 #### Features: 
-•	Authentication
+- Authentication
   o	Email login/ signup
   o	Google login/signup
-•	1:1 video calling
+-	1:1 video calling
   o	User1 can call User2 while chatting with each other.
   o	User2 will receive a pickup screen letting him/her to either decline the call or receive it.
   o	Both the users can chat within the video call as well and can continue the chat even after the call ends.
   o	Calling history is also saved in the database.
-•	Group video calling (more than 2 users)
+-	Group video calling (more than 2 users)
   o	User1 can create a room and can share the link/code to other users.
   o	Code can be shared either within the app or to the other apps.
-•	Chatting, sharing images
+-	Chatting, sharing images
   o	User1 can chat with User2 using the app.
   o	Both the users can share images either from gallery or by clicking the picture. 
   o	Online Dot Indicator- if the user is online a green dot is displayed beside his/her name.
 
 #### Packages and APIs
-•	For authenticating the user
+-	For authenticating the user
   o	Used firebase authentication flutter package and implemented email- password sign in and google sign in. 
   o	Assigns each user a unique uid which is used as key for storing the user’s details in the database.
-•	For implementing the video calling feature
+-	For implementing the video calling feature
   o	Used Agora.io Engine in flutter for implementing various features such as video rendering, mic on/off, video on/off, switch camera.
-•	Database
+-	Database
   o	Used Firestore database for storing the data such as user’s information, contacts, chats, images shared by the users.
-•	Local Database
+-	Local Database
   o	Used Hive Database for storing the call history of the user. 
-•	Used various other packages for improving the UI of the application. 
+-	Used various other packages for improving the UI of the application. 
 
 ## Experience
 As this is a communication based application let’s suppose two users User1 and User2 registers in the application either via google sign in or email password sign in. Ensure that the email entered while registering is a correct and valid email id.
@@ -55,12 +55,12 @@ The user can log out from the app by tapping on profile photo at top left.
 Once the user login through the application, the data is fetched from google/email sign in that firebase provides and is saved in our “user” database with unique uid (provided by firebase) as key. 
 When the user searches for any other user, he/she is displayed all the users in our database according to his search keywords.
 ### Message exchange flow.
-•	When User1 messages user2, the message is stored in a new database “messages”. Inside the collection "messages” , there are documents for all the user registered in the database, and inside each user document, there is a list of all the contacts of that particular user. Inside each contact there are message objects which includes information related to a message such as time, content, type, sender’s and receiver’s uid.
-•	Once all the messages are fetched, it is displayed on the screen with 2 layouts, either sender(on right) and receiver(on left).
+-	When User1 messages user2, the message is stored in a new database “messages”. Inside the collection "messages” , there are documents for all the user registered in the database, and inside each user document, there is a list of all the contacts of that particular user. Inside each contact there are message objects which includes information related to a message such as time, content, type, sender’s and receiver’s uid.
+-	Once all the messages are fetched, it is displayed on the screen with 2 layouts, either sender(on right) and receiver(on left).
 
 ### Video Calling Dataflow
-•	Once a call is made, a call object is created and is stored in the “calls” database. In the other end, the application receives a live stream of data, and when it is not null and the call object’s receiver id matches with the current user’s id, he/she gets a pick up screen. As soon as the call is disconnected, the call object is deleted from the database.
-•	According to the call status (received, missed, called), the data is stored in tabular manner in a local database using Hive. To make the local accessible only to the specified user, the key of the table is same as the uid we used above in firestore database. 
+-	Once a call is made, a call object is created and is stored in the “calls” database. In the other end, the application receives a live stream of data, and when it is not null and the call object’s receiver id matches with the current user’s id, he/she gets a pick up screen. As soon as the call is disconnected, the call object is deleted from the database.
+-	According to the call status (received, missed, called), the data is stored in tabular manner in a local database using Hive. To make the local accessible only to the specified user, the key of the table is same as the uid we used above in firestore database. 
 Testing (Required)
 The app is tested for 1:1 video calls, chatting and group video calls over the internet. Downloading the apk of the application, a user can use the app and its features.
 
