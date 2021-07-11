@@ -70,13 +70,13 @@ https://dev.azure.com/kandhwaykavya/KavyaKandhway%20Teams%20Clone
 
 ## Appendix
 Link to packages and APIs used
-•	https://pub.dev/packages/agora_rtc_engine
-•	https://pub.dev/packages/cloud_firestore
-•	https://pub.dev/packages/firebase_auth
-•	https://pub.dev/packages/google_sign_in
-•	https://pub.dev/packages/firebase_storage
-•	https://pub.dev/packages/flutter_share
-•	https://pub.dev/packages/hive
-•	https://pub.dev/packages/google_fonts
-•	https://pub.dev/packages/image_picker
+-	https://pub.dev/packages/agora_rtc_engine
+-	https://pub.dev/packages/cloud_firestore
+-	https://pub.dev/packages/firebase_auth
+-	https://pub.dev/packages/google_sign_in
+-	https://pub.dev/packages/firebase_storage
+-	https://pub.dev/packages/flutter_share
+-	https://pub.dev/packages/hive
+-	https://pub.dev/packages/google_fonts
+-	https://pub.dev/packages/image_picker
 
