@@ -18,28 +18,28 @@ This is a mobile application developed using flutter and implemented various fea
   -	Email login/ signup
   -	Google login/signup
 -	1:1 video calling
-  o	User1 can call User2 while chatting with each other.
-  o	User2 will receive a pickup screen letting him/her to either decline the call or receive it.
-  o	Both the users can chat within the video call as well and can continue the chat even after the call ends.
-  o	Calling history is also saved in the database.
+  -User1 can call User2 while chatting with each other.
+  -	User2 will receive a pickup screen letting him/her to either decline the call or receive it.
+  -	Both the users can chat within the video call as well and can continue the chat even after the call ends.
+  -	Calling history is also saved in the database.
 -	Group video calling (more than 2 users)
-  o	User1 can create a room and can share the link/code to other users.
-  o	Code can be shared either within the app or to the other apps.
+  -	User1 can create a room and can share the link/code to other users.
+  -	Code can be shared either within the app or to the other apps.
 -	Chatting, sharing images
-  o	User1 can chat with User2 using the app.
-  o	Both the users can share images either from gallery or by clicking the picture. 
-  o	Online Dot Indicator- if the user is online a green dot is displayed beside his/her name.
+  -	User1 can chat with User2 using the app.
+  -	Both the users can share images either from gallery or by clicking the picture. 
+  -	Online Dot Indicator- if the user is online a green dot is displayed beside his/her name.
 
 #### Packages and APIs
 -	For authenticating the user
-  o	Used firebase authentication flutter package and implemented email- password sign in and google sign in. 
-  o	Assigns each user a unique uid which is used as key for storing the user’s details in the database.
+  -	Used firebase authentication flutter package and implemented email- password sign in and google sign in. 
+  -	Assigns each user a unique uid which is used as key for storing the user’s details in the database.
 -	For implementing the video calling feature
-  o	Used Agora.io Engine in flutter for implementing various features such as video rendering, mic on/off, video on/off, switch camera.
+  -	Used Agora.io Engine in flutter for implementing various features such as video rendering, mic on/off, video on/off, switch camera.
 -	Database
-  o	Used Firestore database for storing the data such as user’s information, contacts, chats, images shared by the users.
+  -	Used Firestore database for storing the data such as user’s information, contacts, chats, images shared by the users.
 -	Local Database
-  o	Used Hive Database for storing the call history of the user. 
+  -	Used Hive Database for storing the call history of the user. 
 -	Used various other packages for improving the UI of the application. 
 
 ## Experience
