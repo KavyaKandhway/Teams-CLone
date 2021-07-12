@@ -49,7 +49,7 @@ This is a mobile application developed using flutter and implemented various fea
 - If the User2 accepts the call then both of them is connected via video call with video and mic on/off option. They both can tap on the chat icon at bottom right and can chat within the video call. 
 - Once the call is cut, they both can continue chatting and the messages inside the video call is also retained.
 - For the group calling feature, User1 can create a room and share the code/link with any on his contacts lets say User2, User3, User4. All these three users will receive a message from User1 with a link to join the group video call. They can simply tap onto the button and join the call.
-- The user can log out from the app by tapping on profile photo at top left. 
+- The user can log out from the app by tapping on profile photo at top left.
 
 ## Data flow
 Once the user login through the application, the data is fetched from google/email sign in that firebase provides and is saved in our “user” database with unique uid (provided by firebase) as key. 
