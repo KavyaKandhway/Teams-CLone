@@ -61,8 +61,7 @@ When the user searches for any other user, he/she is displayed all the users in 
 ### Video Calling Dataflow
 -	Once a call is made, a call object is created and is stored in the “calls” database. In the other end, the application receives a live stream of data, and when it is not null and the call object’s receiver id matches with the current user’s id, he/she gets a pick up screen. As soon as the call is disconnected, the call object is deleted from the database.
 -	According to the call status (received, missed, called), the data is stored in tabular manner in a local database using Hive. To make the local accessible only to the specified user, the key of the table is same as the uid we used above in firestore database. 
-Testing (Required)
-The app is tested for 1:1 video calls, chatting and group video calls over the internet. Downloading the apk of the application, a user can use the app and its features.
+
 
 ## Timeline
 4 weeks timeline is provided. Divided the work in 4 sprints and managed them using Azure DevOps. 
