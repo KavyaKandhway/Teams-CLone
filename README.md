@@ -4,7 +4,7 @@
 A Flutter Application with video calling, chatting and image sharing features along with user authentication.
 
 ### Design Documentation
-https://github.com/KavyaKandhway/Teams-CLone/blob/main/Design%20Documentation.docx
+https://github.com/KavyaKandhway/Teams-CLone/blob/main/Design%20Doc.md
 
 ## Getting Started
 
