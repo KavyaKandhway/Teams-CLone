@@ -21,6 +21,23 @@ https://github.com/KavyaKandhway/Teams-CLone/blob/main/Design%20Doc.md
 - `flutter packages get`
 - `flutter run`
 
+## Features: 
+- Authentication
+  -	Email login/ signup
+  -	Google login/signup
+-	1:1 video calling
+    - User1 can call User2 while chatting with each other.
+    -	User2 will receive a pickup screen letting him/her to either decline the call or receive it.
+    -	Both the users can chat within the video call as well and can continue the chat even after the call ends.
+    -	Calling history is also saved in the database.
+-	Group video calling (more than 2 users)
+    -	User1 can create a room and can share the link/code to other users.
+    -	Code can be shared either within the app or to the other apps.
+-	Chatting, sharing images
+    -	User1 can chat with User2 using the app.
+    -	Both the users can share images either from gallery or by clicking the picture. 
+    -	Online Dot Indicator- if the user is online a green dot is displayed beside his/her name.
+
 # Screenshots
 ## Login Screens
 <img width="180" height="350" src="https://github.com/KavyaKandhway/Teams-CLone/blob/main/Screenshots/Screenshot_2021-07-10-18-37-36-667_com.example.teams_clone_kk.jpg"/> <img width="180" height="350" src="https://github.com/KavyaKandhway/Teams-CLone/blob/main/Screenshots/Screenshot_2021-07-10-18-38-00-623_com.example.teams_clone_kk.jpg"/> <img width="180" height="350" src="https://github.com/KavyaKandhway/Teams-CLone/blob/main/Screenshots/Screenshot_2021-07-10-18-38-06-563_com.example.teams_clone_kk.jpg"/>
