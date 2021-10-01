@@ -38,6 +38,8 @@ https://github.com/KavyaKandhway/Teams-CLone/blob/main/Design%20Doc.md
     -	Both the users can share images either from gallery or by clicking the picture. 
     -	Online Dot Indicator- if the user is online a green dot is displayed beside his/her name.
 
+
+
 # Screenshots
 ## Login Screens
 <img width="180" height="350" src="https://github.com/KavyaKandhway/Teams-CLone/blob/main/Screenshots/Screenshot_2021-07-10-18-37-36-667_com.example.teams_clone_kk.jpg"/> <img width="180" height="350" src="https://github.com/KavyaKandhway/Teams-CLone/blob/main/Screenshots/Screenshot_2021-07-10-18-38-00-623_com.example.teams_clone_kk.jpg"/> <img width="180" height="350" src="https://github.com/KavyaKandhway/Teams-CLone/blob/main/Screenshots/Screenshot_2021-07-10-18-38-06-563_com.example.teams_clone_kk.jpg"/>
