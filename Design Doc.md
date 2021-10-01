@@ -53,6 +53,7 @@ This is a mobile application developed using flutter and implemented various fea
 - The user can log out from the app by tapping on profile photo at top left.
 
 ## Data flow
+
 Once the user login through the application, the data is fetched from google/email sign in that firebase provides and is saved in our “user” database with unique uid (provided by firebase) as key. 
 When the user searches for any other user, he/she is displayed all the users in our database according to his search keywords.
 ### Message exchange flow.
