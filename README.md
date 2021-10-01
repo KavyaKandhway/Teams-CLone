@@ -3,7 +3,7 @@
 
 A Flutter Application with video calling, chatting and image sharing features along with user authentication.
 
-# Installing the application
+### Installing the application
 Download the apk from the link below in your mobile and install it. 
 https://drive.google.com/drive/folders/1gHjcrDWLsO5rBrCuMENqlbpgkYoyT3NA?usp=sharing
 
