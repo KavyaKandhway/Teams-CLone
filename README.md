@@ -37,7 +37,7 @@ https://github.com/KavyaKandhway/Teams-CLone/blob/main/Design%20Doc.md
 -	Chatting, sharing images
     -	User1 can chat with User2 using the app.
     -	Both the users can share images either from gallery or by clicking the picture. 
-    -	Online Dot Indicator- if the user is online a green dot is displayed beside his/her name.
+    -	Online Dot Indicator- if the user is online a green dot is displayed beside his/her name..
 
 
 # Screenshots
