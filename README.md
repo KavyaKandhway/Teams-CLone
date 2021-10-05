@@ -1,7 +1,7 @@
 # Teams Clone
 ## Microsoft Engage 2021 Project
 
-A Flutter Application with video calling, chatting and image sharing features along with user authentication.
+A Flutter Application with video calling, chatting and image sharing features along with user authentication just like MS teams.
 
 ### Installing the application
 Download the apk from the link below in your mobile and install it. 
