@@ -19,7 +19,7 @@ https://github.com/KavyaKandhway/Teams-CLone/blob/main/Design%20Doc.md
 
 - `git clone https://github.com/KavyaKandhway/Teams-CLone.git`.
 - `cd Teams-CLone`.
-- `flutter packages get`
+- `flutter packages get`.
 - `flutter run`
 
 ## Features: 
@@ -36,7 +36,7 @@ https://github.com/KavyaKandhway/Teams-CLone/blob/main/Design%20Doc.md
     -	Code can be shared either within the app or to the other apps.
 -	Chatting, sharing images
     -	User1 can chat with User2 using the app.
-    -	Both the users can share images either from gallery or by clicking the picture. 
+    -	Both the users can share images either from gallery or by clicking the picture..
     -	Online Dot Indicator- if the user is online a green dot is displayed beside his/her name..
 
 henlo
