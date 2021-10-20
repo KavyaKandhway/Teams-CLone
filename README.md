@@ -18,7 +18,7 @@ https://github.com/KavyaKandhway/Teams-CLone/blob/main/Design%20Doc.md
 ## Getting Started
 
 - `git clone https://github.com/KavyaKandhway/Teams-CLone.git`.
-- `cd Teams-CLone`
+- `cd Teams-CLone`.
 - `flutter packages get`
 - `flutter run`
 
