@@ -10,7 +10,6 @@ https://drive.google.com/drive/folders/1gHjcrDWLsO5rBrCuMENqlbpgkYoyT3NA?usp=sha
 In case there is a problem while installing try checking for the permissions in your mobile settings. Permission to install from google drive should be granted. 
 Once installed follow the instructions in the experience section provided in design documentation below.
 
-
 # Design Documentation
 
 
@@ -40,7 +39,7 @@ https://github.com/KavyaKandhway/Teams-CLone/blob/main/Design%20Doc.md
     -	Both the users can share images either from gallery or by clicking the picture..
     -	Online Dot Indicator- if the user is online a green dot is displayed beside his/her name..
 
-henlo
+
 
 # Screenshots
 ## Login Screens
