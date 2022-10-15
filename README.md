@@ -7,7 +7,7 @@ A Flutter Application with video calling, chatting and image sharing features al
 Download the apk from the link below in your mobile and install it. 
 https://drive.google.com/drive/folders/1gHjcrDWLsO5rBrCuMENqlbpgkYoyT3NA?usp=sharing
 
-In case there is a problem while installing try checking for the permissions in your mobile settings. Permission to install from google drive should be granted. 
+In case if there is a problem while installing try checking for the permissions in your mobile settings. Permission to install from google drive should be granted. 
 Once installed follow the instructions in the experience section provided in design documentation below.
 
 ## Design  Documentation
