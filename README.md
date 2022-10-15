@@ -4,7 +4,7 @@
 A Flutter Application with video calling, chatting and image sharing features along with user authentication just like MS teams.
 
 ### Installing the application
-Download the apk from the link below in your mobile and install it. 
+Download the apk from link below in your mobile and install it. 
 https://drive.google.com/drive/folders/1gHjcrDWLsO5rBrCuMENqlbpgkYoyT3NA?usp=sharing
 
 In case there is a problem while installing try checking for the permissions in your mobile settings. Permission to install from google drive should be granted. 
